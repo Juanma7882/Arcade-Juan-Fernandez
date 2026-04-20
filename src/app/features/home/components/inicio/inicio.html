@@ -1,13 +1,13 @@
 <section
-  class="relative w-full h-screen flex items-center justify-center text-center overflow-hidden"
+  class="w-full h-screen flex items-center justify-center text-center relative overflow-hidden bg-black/0 bg-linear-to-t from-black via-transparent to-black"
 >
   <!-- fondo imagen  -->
-  <div class="absolute inset-0 z-0">
-    <img src="TU_IMAGEN_DE_FONDO.jpg" alt="Background" class="w-full h-full object-cover" />
-    <div
-      class="absolute inset-0 bg-black/60 bg-gradient-to-t from-black via-transparent to-black"
-    ></div>
-  </div>
+  <video class="absolute inset-0 w-full h-full object-cover -z-10" autoplay loop muted playsinline>
+    <source
+      src="https://res.cloudinary.com/da2xkjyud/video/upload/arcade_mxycev.mp4"
+      type="video/mp4"
+    />
+  </video>
 
   <!-- pagina max-w-4xl-->
   <div class="relative z-10 flex flex-col items-center px-4 h-screen w-full justify-center">
