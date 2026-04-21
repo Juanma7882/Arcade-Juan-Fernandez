@@ -1,1 +1,160 @@
-<p>register works!</p>
+<section class="bg-gray-900 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center mb-6">Registrarse</h2>
+
+    <form [formGroup]="profileUser">
+      <!-- Email -->
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Correo</label>
+        <input
+          type="email"
+          placeholder="Agustin@gmail"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="correo"
+        />
+        @if (getCorreo?.invalid && getCorreo?.touched) {
+          @if (getCorreo?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getCorreo?.errors?.['email']) {
+            <span class="text-red-500 text-sm">Formato de email inválido</span>
+          }
+          @if (getCorreo?.errors?.['minlength']) {
+            <span class="text-red-500 text-sm">Mínimo 3 caracteres</span>
+          }
+        }
+      </div>
+
+      <!-- Nombre -->
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Nombre</label>
+        <input
+          type="text"
+          placeholder="Tu nombre"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="userName"
+        />
+        @if (getUserName?.invalid && getUserName?.touched) {
+          @if (getUserName?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getUserName?.errors?.['minlength']) {
+            <span class="text-red-500 text-sm">Mínimo 2 caracteres</span>
+          }
+        }
+      </div>
+
+      <!-- Apellido -->
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Apellido</label>
+        <input
+          type="text"
+          placeholder="Tu apellido"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="userLastName"
+        />
+        @if (getUserLastName?.invalid && getUserLastName?.touched) {
+          @if (getUserLastName?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getUserLastName?.errors?.['minlength']) {
+            <span class="text-red-500 text-sm">Mínimo 2 caracteres</span>
+          }
+        }
+      </div>
+
+      <!-- Edad -->
+      <div class="mb-4">
+        <label class="block text-gray-700 mb-2">Edad</label>
+        <input
+          type="number"
+          placeholder="Tu edad"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="userAge"
+        />
+        @if (getUserAge?.invalid && getUserAge?.touched) {
+          @if (getUserAge?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getUserAge?.errors?.['pattern']) {
+            <span class="text-red-500 text-sm">Edad inválida (1-150)</span>
+          }
+        }
+      </div>
+
+      <!-- Contraseña -->
+      <div class="mb-4 relative">
+        <label class="block text-gray-700 mb-2">Contraseña</label>
+        <input
+          id="password"
+          [type]="valuePassword ? 'text' : 'password'"
+          placeholder="Ingresa tu contraseña"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="userPassword"
+        />
+        @if (getUserPassword?.invalid && getUserPassword?.touched) {
+          @if (getUserPassword?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getUserPassword?.errors?.['minlength']) {
+            <span class="text-red-500 text-sm">Mínimo 8 caracteres</span>
+          }
+        }
+        <span
+          (click)="togglePassword()"
+          class="absolute right-3 top-9 cursor-pointer text-gray-500"
+          >{{ valuePassword ? '🙈' : '👀' }}</span
+        >
+      </div>
+
+      <!-- Repetir Contraseña -->
+      <div class="mb-4 relative">
+        <label class="block text-gray-700 mb-2">Repetir Contraseña</label>
+        <input
+          id="confirmPassword"
+          [type]="valueConfirmPassword ? 'text' : 'password'"
+          placeholder="Repite tu contraseña"
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+          formControlName="confirmPassword"
+        />
+
+        @if (getConfirmPassword?.invalid && getConfirmPassword?.touched) {
+          @if (getConfirmPassword?.errors?.['required']) {
+            <span class="text-red-500 text-sm">Este campo es requerido</span>
+          }
+          @if (getConfirmPassword?.errors?.['minlength']) {
+            <span class="text-red-500 text-sm">Mínimo 8 caracteres</span>
+          }
+        }
+        <span
+          (click)="toggleConfirmPassword()"
+          class="absolute right-3 top-9 cursor-pointer text-gray-500"
+        >
+          {{ valueConfirmPassword ? '🙈' : '👀' }}
+        </span>
+      </div>
+      <!-- Error mensaje -->
+      <p id="error" class="text-red-500 text-sm mb-4 hidden">Las contraseñas no coinciden</p>
+
+      <!-- Botón -->
+      <button
+        type="submit"
+        class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+      >
+        Registrarse
+      </button>
+    </form>
+
+    <!-- Link a login -->
+    <p class="text-center text-sm mt-4">
+      ¿Ya tenés cuenta?
+      <a href="/auth/login" class="text-blue-500 hover:underline">Iniciar sesión</a>
+    </p>
+  </div>
+</section>
