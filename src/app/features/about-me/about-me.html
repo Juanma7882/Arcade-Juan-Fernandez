@@ -16,17 +16,17 @@
   </video>
   <div class="max-w-2xl mx-auto flex flex-col gap-3 relative z-10 mt-12">
     <!-- header -->
-    <div class="flex items-center gap-4 bg-transparent border rounded-xl p-5">
+    <div class="flex items-center gap-4 bg-transparent border rounded-xl p-5 border-pink-700">
       <div class="shrink-0 w-20 h-20 rounded-2xl border-2 border-orange-400 overflow-hidden">
         <img
           class="w-full h-full object-cover"
-          src="https://avatars.githubusercontent.com/u/138984815?v=4"
+          src="{{ userData()?.avatar_url }}"
           alt="avatar-github"
         />
       </div>
       <div>
-        <h1 class="text-xl font-bold text-[#e6edf3] tracking-tight">Fernandez Juan</h1>
-        <pre class="text-[9px] leading-tight text-orange-400 opacity-80 font-mono mt-1">
+        <h1 class="text-xl font-bold text-[#e6edf3] tracking-tight">{{ userData()?.login }}</h1>
+        <pre class="text-[9px] leading-tight text-pink-100 opacity-80 font-mono mt-1">
 ───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───
 ───█▒▒░░░░░░░░░▒▒█───
 ────█░░█░░░░░█░░█────
@@ -40,27 +40,64 @@
         >
       </div>
     </div>
+    <!-- img de mona -->
+    <div class="shrink-0 rounded-2xl border-2 border-violet-700 overflow-hidden">
+      <img src="/witch.jpg" alt="" class="w-full object-cover h-full" />
+    </div>
+    <!-- snake -->
+    <img
+      class="border-green-500 border rounded-2xl"
+      src="/github-contribution-grid-snake.svg"
+      alt=""
+    />
 
     <!-- stats -->
     <div class="grid grid-cols-3 gap-2">
       <div
-        class="flex flex-col items-center bg-[#161b22] bg-transparent border hover:border-orange-400 transition-colors rounded-xl p-4"
+        class="flex flex-col items-center bg-[#161b22]/25 border border-amber-500 transition-colors rounded-xl p-4"
       >
-        <span class="text-2xl font-bold text-orange-400">39</span>
+        <span class="text-2xl font-bold text-orange-400">{{ userData()?.public_repos }}</span>
         <span class="text-[11px] uppercase tracking-wider mt-1">repositorios</span>
       </div>
       <div
-        class="flex flex-col items-center bg-[#161b22] border bg-transparent hover:border-orange-400 transition-colors rounded-xl p-4"
+        class="flex flex-col items-center bg-[#161b22]/25 border border-amber-500 transition-colors rounded-xl p-4"
       >
-        <span class="text-2xl font-bold text-orange-400">5</span>
+        <span class="text-2xl font-bold text-orange-400">{{ userData()?.followers }}</span>
         <span class="text-[11px] uppercase tracking-wider mt-1">seguidores</span>
       </div>
       <div
-        class="flex flex-col items-center bg-[#161b22] bg-transparent border hover:border-orange-400 transition-colors rounded-xl p-4"
+        class="flex flex-col items-center bg-[#161b22]/25 border border-amber-500 transition-colors rounded-xl p-4"
       >
-        <span class="text-sm font-bold text-orange-400 mt-1">10/05/23</span>
+        <span class="text-sm font-bold text-orange-400 mt-1">{{
+          userData()?.created_at?.slice(0, 10)
+        }}</span>
         <span class="text-[11px] uppercase tracking-wider mt-1">miembro desde</span>
       </div>
+    </div>
+
+    <!-- description -->
+    <div class="border border-red-600 rounded-2xl">
+      <pre class="text-sm leading-tight text-[#e6edf3] tracking-tight text-left p-5">
+Elegí el juego La Viborita porque es un clásico sencillo pero muy entretenido, 
+ideal para practicar lógica de programación, manejo de eventos del teclado
+y control de movimiento en pantalla. Además, permite ir agregando mejoras 
+fácilmente, como aumentar la dificultad o sumar puntaje.
+
+¿Cómo se juega?
+
+El jugador controla una viborita que se mueve por la pantalla. 
+El objetivo es comer los elementos que aparecen (por ejemplo, comida), 
+lo que hace que la viborita crezca y aumente el puntaje.
+
+Se puede mover usando las teclas W, A, S, D o las flechas del teclado:
+W / Flecha arriba: mover hacia arriba
+S / Flecha abajo: mover hacia abajo
+A / Flecha izquierda: mover hacia la izquierda
+D / Flecha derecha: mover hacia la derecha
+
+El juego termina si la viborita choca contra los bordes de la pantalla o 
+contra su propio cuerpo.
+      </pre>
     </div>
   </div>
 </section>

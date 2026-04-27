@@ -62,9 +62,10 @@
 
       <!-- Botón login -->
       <button
+        (click)="onSubmit()"
         type="submit"
         [disabled]="!profileForm.valid"
-        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
       >
         Ingresar
       </button>

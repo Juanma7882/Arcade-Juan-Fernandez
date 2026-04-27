@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SupabaseService } from '../../../core/services/supabase.service';
+
+
 
 @Component({
   selector: 'app-register',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
+
+  private supabaseService: SupabaseService;
+
+  constructor(supabaseService: SupabaseService) {
+    this.supabaseService = supabaseService;
+  }
 
   regexAge = /^(0?[1-9]|[1-9][0-9]|[1][0-4][0-9]|150)$/;
 
@@ -72,6 +82,33 @@ export class Register {
   }
   toggleConfirmPassword() {
     this.valueConfirmPassword = !this.valueConfirmPassword
+  }
+
+  validateAll() {
+    this.profileUser.markAllAsTouched();
+    const InputPassword = this.getUserPassword?.value;
+    const InputConfirmPassword = this.getConfirmPassword?.value;
+    const errorEl = document.getElementById('error');
+
+    if (InputPassword !== InputConfirmPassword) {
+      errorEl?.classList.remove('hidden');
+      return;
+    }
+    errorEl?.classList.add('hidden');
+
+    if (this.profileUser.valid) {
+      this.supabaseService.signUp({
+        email: this.getCorreo?.value || '',
+        password: this.getUserPassword?.value || '',
+        options: {
+          data: {
+            nombre: this.getUserName?.value || '',
+            apellido: this.getUserLastName?.value || '',
+            edad: this.getUserAge?.value || '',
+          }
+        }
+      })
+    }
   }
 
 }

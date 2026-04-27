@@ -8,8 +8,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './login.css',
 })
 export class Login {
-
-
   profileForm = new FormGroup({
     username: new FormControl<string | null>('', [
       Validators.required,
@@ -37,5 +35,9 @@ export class Login {
   }
 
   onSubmit() {
+    this.profileForm.markAllAsTouched();
+    if (this.profileForm.valid) {
+
+    }
   }
 }

@@ -17,7 +17,10 @@ export const routes: Routes = [
             {
                 path: 'about-me',
                 loadComponent: () => import('./features/about-me/about-me').then(m => m.AboutMe)
-
+            },
+            {
+                path: 'games',
+                loadComponent: () => import('./features/games/games').then(m => m.Games)
             }
         ]
     },
