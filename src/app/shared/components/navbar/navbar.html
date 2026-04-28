@@ -82,28 +82,39 @@
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
         <div class="text-amber-50">
-          <ul class="flex gap-6">
-            <li>
-              <a
-                routerLink="/auth/login"
-                routerLinkActive="bg-gray-950/50"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="hover:bg-white/20 p-2 rounded-md"
-                href="auth/login"
-                >iniciar sesion</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="auth/register"
-                routerLinkActive="bg-gray-950/50"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="hover:bg-white/20 p-2 rounded-md"
-                href="auth/register"
-                >registro</a
-              >
-            </li>
-          </ul>
+          @if (supabase.isLoggedIn()) {
+            <!-- Usuario logueado -->
+            <div class="flex items-center gap-4">
+              <span class="text-sm text-gray-300">{{ supabase.userEmail() }}</span>
+              <button (click)="logout()" class="hover:bg-white/20 p-2 rounded-md">
+                Cerrar sesión
+              </button>
+            </div>
+          } @else {
+            <!-- Usuario no logueado -->
+            <ul class="flex gap-6">
+              <li>
+                <a
+                  routerLink="/auth/login"
+                  routerLinkActive="bg-gray-950/50"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="hover:bg-white/20 p-2 rounded-md"
+                  href="auth/login"
+                  >iniciar sesion</a
+                >
+              </li>
+              <li>
+                <a
+                  routerLink="auth/register"
+                  routerLinkActive="bg-gray-950/50"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="hover:bg-white/20 p-2 rounded-md"
+                  href="auth/register"
+                  >registro</a
+                >
+              </li>
+            </ul>
+          }
         </div>
       </div>
     </div>

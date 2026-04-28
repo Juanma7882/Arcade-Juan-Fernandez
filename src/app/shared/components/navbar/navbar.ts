@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SupabaseService } from '../../../core/services/supabase.auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +9,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.css',
 })
 export class Navbar {
+  supabase = inject(SupabaseService);
 
+  async logout() {
+    await this.supabase.signOut();
+    window.location.reload();
+  }
 
 }

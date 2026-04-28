@@ -54,7 +54,9 @@
           }
         }
       </div>
-
+      @if (inValidCredential) {
+        <span class="text-red-500 text-sm py-2">La contraseña o el usuario es invalido</span>
+      }
       <!-- Olvidaste contraseña -->
       <!-- <div class="flex justify-end mb-4">
         <a href="#" class="text-sm text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
@@ -62,14 +64,18 @@
 
       <!-- Botón login -->
       <button
-        (click)="onSubmit()"
         type="submit"
-        [disabled]="!profileForm.valid"
         class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
       >
         Ingresar
       </button>
     </form>
+    <div
+      class="w-full mt-2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+      (click)="logInQuickly()"
+    >
+      inicio rapido
+    </div>
 
     <!-- Registrarse -->
     <p class="text-center text-sm mt-4">
