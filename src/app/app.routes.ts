@@ -28,7 +28,12 @@ export const routes: Routes = [
             },
             {
                 path: 'games',
-                loadComponent: () => import('./features/games/games').then(m => m.Games)
+                loadComponent: () => import('./features/games/games').then(m => m.Games),
+                canActivate: [authGuard]
+            },
+            {
+                path: '**',
+                loadComponent: () => import('./features/home/home').then(m => m.Home)
             }
         ]
     },
@@ -36,9 +41,9 @@ export const routes: Routes = [
     //     path: 'auth',
     //     loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
     // },
-    // {
-    //     path: '**',
-    //     loadComponent: () => import('./features/home/home').then(m => m.Home)
-    // }
+    {
+        path: '**',
+        loadComponent: () => import('./features/home/home').then(m => m.Home)
+    }
 
 ];

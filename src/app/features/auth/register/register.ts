@@ -128,6 +128,7 @@ export class Register {
         console.error(err);
 
         errorEl!.textContent = err.message;
+        if (err.message == "User already registered") errorEl!.textContent = "El usuario ya existe";
         errorEl?.classList.remove('hidden');
       }
     }

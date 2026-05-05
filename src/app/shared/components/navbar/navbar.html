@@ -57,24 +57,26 @@
                 >Inicio</a
               >
             </li>
-            <li>
-              <a
-                routerLink="/games"
-                routerLinkActive="bg-gray-950/50"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/20 hover:text-white"
-                >Juegos</a
-              >
-            </li>
-            <li>
-              <a
-                routerLink="/about-me"
-                routerLinkActive="bg-gray-950/50"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/20 hover:text-white"
-                >Sobre mi</a
-              >
-            </li>
+            @if (supabase.isLoggedIn()) {
+              <li>
+                <a
+                  routerLink="/games"
+                  routerLinkActive="bg-gray-950/50"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/20 hover:text-white"
+                  >Juegos</a
+                >
+              </li>
+              <li>
+                <a
+                  routerLink="/about-me"
+                  routerLinkActive="bg-gray-950/50"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/20 hover:text-white"
+                  >Sobre mi</a
+                >
+              </li>
+            }
           </ul>
         </div>
       </div>

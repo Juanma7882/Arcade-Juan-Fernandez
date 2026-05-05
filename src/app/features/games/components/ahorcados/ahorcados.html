@@ -1,1 +1,99 @@
-<p>ahorcados works!</p>
+<section
+  class="w-full min-h-dvh flex items-center justify-center flex-col gap-10 py-12 bg-gradient-to-t from-black via-slate-950 to-gray-950 text-amber-50"
+>
+  <!-- Dibujo ahorcado -->
+  <div class="font-mono text-amber-400 text-sm leading-tight">
+    <pre>{{ dibujoActual }}</pre>
+  </div>
+
+  <div class="flex gap-10">
+    <p>puntuación: {{ puntuacion }}</p>
+    <p class="text-slate-400">
+      Tiempo: <span class="text-amber-400 font-bold">{{ tiempoFormateado }}</span>
+    </p>
+  </div>
+
+  <!-- Contador de errores -->
+  <p class="text-slate-400 text-sm tracking-widest uppercase">
+    Errores: <span class="text-amber-400 font-bold">{{ errores }}</span> / 6
+  </p>
+
+  <!-- Palabra -->
+  <div class="text-3xl font-bold tracking-[0.4em] font-mono">
+    {{ palabraMostrada }}
+  </div>
+
+  <!-- comenzar juego  -->
+  @if (!juegoIniciado) {
+    <button
+      (click)="iniciarJuego()"
+      class="border border-amber-400 text-amber-400 px-8 py-2 hover:bg-amber-400 hover:text-black transition-all duration-200 cursor-pointer tracking-widest uppercase text-sm"
+    >
+      Empezar
+    </button>
+  } @else {
+    <!-- Mensaje fin de juego -->
+    @if (juegoTerminado) {
+      <div class="flex flex-col items-center gap-4 text-center px-4">
+        @if (ganoTodo) {
+          <div class="flex flex-col items-center gap-4 text-center px-4">
+            <p class="text-2xl font-bold text-yellow-400">🏆 ¡Completaste todas las palabras!</p>
+            <p class="text-slate-400">
+              Puntuación final: <span class="text-amber-400 font-bold">{{ puntuacion }}</span>
+            </p>
+            <button
+              (click)="iniciarJuego()"
+              class="mt-2 border border-amber-400 text-amber-400 px-8 py-2 hover:bg-amber-400 hover:text-black transition-all duration-200 cursor-pointer tracking-widest uppercase text-sm"
+            >
+              Jugar de nuevo
+            </button>
+          </div>
+        } @else if (gano) {
+          <p>{{ ganoTodo }}</p>
+          <p class="text-2xl font-bold text-green-400">🎉 ¡Ganaste!</p>
+          <p class="text-slate-400">
+            La palabra era <span class="text-amber-400 font-bold">{{ palabraActual }}</span>
+          </p>
+          <button
+            (click)="seguirJugando()"
+            class="mt-2 border border-amber-400 text-amber-400 px-8 py-2 hover:bg-amber-400 hover:text-black transition-all duration-200 cursor-pointer tracking-widest uppercase text-sm"
+          >
+            seguir jugando
+          </button>
+        } @else {
+          <p class="text-2xl font-bold text-red-400">💀 ¡Perdiste!</p>
+          <p class="text-slate-400">
+            La palabra era <span class="text-amber-400 font-bold">{{ palabraActual }}</span>
+          </p>
+          <button
+            (click)="iniciarJuego()"
+            class="mt-2 border border-amber-400 text-amber-400 px-8 py-2 hover:bg-amber-400 hover:text-black transition-all duration-200 cursor-pointer tracking-widest uppercase text-sm"
+          >
+            Jugar de nuevo
+          </button>
+        }
+      </div>
+    }
+  }
+
+  <!-- Teclado -->
+  <div class="flex gap-3 flex-wrap lg:w-2/4 justify-center">
+    @for (letra of letras; track letra) {
+      <p
+        (click)="seleccionarLetra(letra)"
+        [class]="
+          'border p-2 px-4 text-sm font-bold transition-all duration-150 select-none ' +
+          (estadoLetra(letra) === 'correcta'
+            ? 'border-green-500 text-green-400 cursor-default opacity-60'
+            : estadoLetra(letra) === 'errada'
+              ? 'border-red-700 text-red-700 cursor-default opacity-40 line-through'
+              : juegoTerminado
+                ? 'border-slate-700 text-slate-700 cursor-not-allowed'
+                : 'border-amber-400 cursor-pointer hover:bg-amber-400 hover:text-black')
+        "
+      >
+        {{ letra }}
+      </p>
+    }
+  </div>
+</section>
