@@ -9,14 +9,14 @@ import { CommonModule } from '@angular/common';
 })
 export class Ahorcados {
 
-  // readonly PALABRAS = [
-  //   'ANGULAR', 'TYPESCRIPT', 'COMPONENTE', 'DIRECTIVA', 'SERVICIO',
-  //   'MODULO', 'TEMPLATE', 'ROUTER', 'OBSERVABLE', 'INYECCION',
-  //   'INTERFAZ', 'DECORADOR', 'PROPIEDAD', 'HERENCIA', 'PROMESA'
-  // ];
   readonly PALABRAS = [
-    'ABC'
-  ]
+    'ANGULAR', 'TYPESCRIPT', 'COMPONENTE', 'DIRECTIVA', 'SERVICIO',
+    'MODULO', 'TEMPLATE', 'ROUTER', 'OBSERVABLE', 'INYECCION',
+    'INTERFAZ', 'DECORADOR', 'PROPIEDAD', 'HERENCIA', 'PROMESA'
+  ];
+  // readonly PALABRAS = [
+  //   'ABC'
+  // ]
 
   readonly MAX_ERRORES = 6;
   readonly MAX_PALABRAS = this.PALABRAS.length;

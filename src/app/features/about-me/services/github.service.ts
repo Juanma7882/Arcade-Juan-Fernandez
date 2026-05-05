@@ -2,6 +2,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Token } from '@angular/compiler';
+import { environment } from '../../../environments/environment';
 
 export interface GitHubUser {
     login: string;
@@ -18,8 +20,8 @@ export class MiapiService {
 
     private http = inject(HttpClient);
     private baseUrl = 'https://api.github.com/users/juanma7882';
-
+    private token = environment.tokenGithub;
     getData(): Observable<GitHubUser> {
-        return this.http.get<GitHubUser>(`${this.baseUrl}`);
+        return this.http.get<GitHubUser>(this.baseUrl);
     }
 }

@@ -1,1 +1,182 @@
-<p>mayor-menor works!</p>
+<section
+  class="game-root w-full min-h-dvh flex flex-col items-center justify-center gap-8 py-12 px-4 bg-gradient-to-b from-gray-950 via-slate-950 to-black text-amber-50"
+>
+  <!-- Error banner -->
+  @if (errorMsg()) {
+    <div class="flex flex-col items-center gap-3 text-center">
+      <p class="text-red-400 font-medium">{{ errorMsg() }}</p>
+      <button
+        (click)="initDeck()"
+        class="px-5 py-2 rounded-lg border border-red-500/40 text-red-300 text-sm hover:bg-red-950/40 transition-colors"
+      >
+        Reintentar
+      </button>
+    </div>
+  }
+
+  @if (!errorMsg()) {
+    <!-- Stats bar -->
+    <div class="stats-bar flex gap-3 w-full max-w-sm">
+      <div
+        class="stat-card flex-1 rounded-xl p-3 text-center bg-white/[0.04] border border-white/10"
+      >
+        <span class="block text-[9px] tracking-[2px] uppercase text-white/35 font-display mb-1"
+          >Puntos</span
+        >
+        <span class="text-2xl font-bold font-display text-amber-50">{{ points() }}</span>
+      </div>
+      <div class="stat-card flex-1 rounded-xl p-3 text-center border streak-card">
+        <span class="block text-[9px] tracking-[2px] uppercase text-amber-500/80 font-display mb-1"
+          >Racha</span
+        >
+        <span class="text-2xl font-bold font-display text-yellow-400">{{ streak() }} 🔥</span>
+      </div>
+      <div class="stat-card flex-1 rounded-xl p-3 text-center border streak-card">
+        <span class="block text-[9px] tracking-[2px] uppercase text-amber-500/80 font-display mb-1"
+          >vidas</span
+        >
+        <span class="text-2xl font-bold font-display text-yellow-400">{{ life() }} ♥</span>
+      </div>
+      <div
+        class="stat-card flex-1 rounded-xl p-3 text-center bg-white/[0.04] border border-white/10"
+      >
+        <span class="block text-[9px] tracking-[2px] uppercase text-white/35 font-display mb-1"
+          >Récord</span
+        >
+        <span class="text-2xl font-bold font-display text-amber-50">{{ record() }}</span>
+      </div>
+    </div>
+
+    <!-- Table felt -->
+    <div
+      class="table-felt relative flex items-center justify-center gap-10 w-full max-w-md rounded-[120px] px-12 py-8 border border-white/[0.07]"
+    >
+      <!-- Current card -->
+      <div class="card-slot relative">
+        @if (currentCard()) {
+          <div class="card card-visible" [class.dealing]="!showNextCard()">
+            <img
+              [src]="currentCard()!.image"
+              [alt]="currentCard()!.code"
+              class="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+        } @else {
+          <div class="card card-placeholder rounded-lg"></div>
+        }
+      </div>
+
+      <!-- Arrow -->
+      <span class="text-white/20 text-2xl font-light select-none">→</span>
+
+      <!-- Next card -->
+      <div class="card-slot relative">
+        @if (showNextCard() && nextCard()) {
+          <div class="card card-visible card-reveal">
+            <img
+              [src]="nextCard()!.image"
+              [alt]="nextCard()!.code"
+              class="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+        } @else {
+          <!-- Card back -->
+          <div class="card card-back rounded-lg">
+            <div class="card-back-inner rounded-md">
+              <!-- Uses your local downloaded image -->
+              <img
+                src="/posterior.jpg"
+                alt="Reverso"
+                class="w-full h-full object-cover rounded-lg"
+                onerror="this.style.display = 'none'"
+              />
+              <!-- Fallback pattern if image is missing -->
+              <div class="back-pattern"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Question / feedback -->
+    <div class="flex flex-col items-center gap-1 min-h-[52px] text-center">
+      @if (!lastResult()) {
+        <span class="text-[10px] tracking-[3px] uppercase text-white/30 font-display"
+          >La próxima carta será</span
+        >
+        <span class="text-base text-white/50 italic font-serif">¿Mayor, Menor o Igual?</span>
+      } @else {
+        <p
+          class="feedback-text text-lg font-display font-semibold tracking-wide"
+          [class.text-emerald-400]="lastResult() === 'win'"
+          [class.text-red-400]="lastResult() === 'lose'"
+        >
+          {{ resultText() }}
+        </p>
+      }
+    </div>
+
+    <!-- Guess buttons -->
+    @if (vidas > 0) {
+      <div class="flex gap-3">
+        <button
+          (click)="guess('menor')"
+          [disabled]="!isWaiting()"
+          class="bet-btn bet-menor font-display text-xs tracking-widest uppercase px-6 py-3 rounded-xl transition-all disabled:opacity-30 disabled:cursor-default"
+        >
+          ▼ Menor
+        </button>
+        <button
+          (click)="guess('igual')"
+          [disabled]="!isWaiting()"
+          class="bet-btn bet-igual font-display text-xs tracking-widest uppercase px-6 py-3 rounded-xl transition-all disabled:opacity-30 disabled:cursor-default text-yellow-300"
+        >
+          = Igual
+        </button>
+        <button
+          (click)="guess('mayor')"
+          [disabled]="!isWaiting()"
+          class="bet-btn bet-mayor font-display text-xs tracking-widest uppercase px-6 py-3 rounded-xl transition-all disabled:opacity-30 disabled:cursor-default"
+        >
+          ▲ Mayor
+        </button>
+      </div>
+      <!-- Next / Reset -->
+      <div class="flex gap-3 min-h-[40px] items-center">
+        @if (isRevealing()) {
+          <button
+            (click)="nextRound()"
+            class="px-6 py-2 rounded-lg border border-white/20 text-white/50 text-xs font-display tracking-widest uppercase hover:border-white/40 hover:text-white/80 transition-all"
+          >
+            Siguiente carta →
+          </button>
+        }
+        @if (isLoading()) {
+          <span class="text-white/30 text-xs font-display tracking-widest animate-pulse uppercase">
+            Robando carta...
+          </span>
+        }
+      </div>
+
+      <!-- Remaining + reset -->
+      <div class="flex items-center gap-4 text-white/20 text-xs">
+        <span>{{ remaining() }} cartas restantes</span>
+        <span>·</span>
+        <button
+          (click)="resetGame()"
+          class="hover:text-white/50 transition-colors underline underline-offset-2"
+        >
+          Nueva partida
+        </button>
+      </div>
+    } @else {
+      <p>perdiste</p>
+      <button
+        (click)="resetGame()"
+        class="hover:text-white/50 transition-colors underline underline-offset-2"
+      >
+        Nueva partida
+      </button>
+    }
+  }
+</section>
