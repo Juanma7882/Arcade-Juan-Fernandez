@@ -19,7 +19,7 @@ export interface SignUpForm {
     providedIn: 'root',
 })
 export class SupabaseService {
-    private supabase: SupabaseClient
+    public supabase: SupabaseClient
 
     // Signal privado — solo el service lo modifica
     private _currentUser = signal<User | null>(null);
