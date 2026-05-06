@@ -1,0 +1,60 @@
+<section
+  class="bg-gradient-to-b from-amber-900 to-amber-800 w-full max-w-md mx-auto min-h-dvh text-amber-100 p-4 relative overflow-hidden flex flex-col"
+>
+  <!-- Header del chat -->
+  <div class="bg-amber-950/80 backdrop-blur-sm rounded-t-2xl p-3 mb-2 border-b border-amber-700/50">
+    <h2 class="font-bold text-amber-100 text-center">Chat global</h2>
+  </div>
+
+  <!-- Contenedor de mensajes -->
+  <div
+    #chatContainer
+    class="flex flex-col gap-3 p-3 bg-amber-950/30 rounded-2xl flex-1 overflow-y-auto max-h-[70vh]"
+  >
+    @for (msg of messages(); track msg.id) {
+      <!-- Nombre -->
+      <span
+        class="text-xs font-semibold text-amber-300"
+        [class.ml-2]="msg.user_uid !== currentUser()?.id"
+        [class.mr-2]="msg.user_uid === currentUser()?.id"
+        [class.text-right]="msg.user_uid === currentUser()?.id"
+        [class.block]="msg.user_uid === currentUser()?.id"
+      >
+        {{ msg.users?.nombre }} {{ msg.users?.apellido }}
+      </span>
+
+      <!-- Contenedor -->
+      <div class="flex" [class.justify-end]="msg.user_uid === currentUser()?.id">
+        <p
+          class="px-4 py-2 rounded-2xl max-w-[80%] shadow-md backdrop-blur-sm"
+          [class.bg-green-500/80]="msg.user_uid === currentUser()?.id"
+          [class.rounded-tr-none]="msg.user_uid === currentUser()?.id"
+          [class.bg-red-500/80]="msg.user_uid !== currentUser()?.id"
+          [class.rounded-tl-none]="msg.user_uid !== currentUser()?.id"
+        >
+          {{ msg.mensaje }}
+        </p>
+      </div>
+    }
+  </div>
+
+  <!-- Input y botón -->
+  <div
+    class="bg-purple-700/90 backdrop-blur-sm mt-3 rounded-2xl p-3 flex gap-2 shadow-lg border border-purple-600"
+  >
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      (keyup.enter)="send()"
+      placeholder="Escribe un mensaje..."
+      class="flex-1 bg-purple-800/50 text-amber-100 placeholder-amber-300/50 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+    />
+
+    <button
+      (click)="send()"
+      class="bg-purple-500 hover:bg-purple-600 transition-all px-5 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg"
+    >
+      enviar
+    </button>
+  </div>
+</section>

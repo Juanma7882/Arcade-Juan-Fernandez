@@ -22,6 +22,11 @@ export class MiapiService {
     private baseUrl = 'https://api.github.com/users/juanma7882';
     private token = environment.tokenGithub;
     getData(): Observable<GitHubUser> {
-        return this.http.get<GitHubUser>(this.baseUrl);
+        return this.http.get<GitHubUser>(this.baseUrl, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`,
+                'Accept': 'application/vnd.github+json'
+            }
+        });
     }
 }

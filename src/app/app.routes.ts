@@ -32,6 +32,16 @@ export const routes: Routes = [
                 canActivate: [authGuard]
             },
             {
+                path: 'chat',
+                loadComponent: () => import('./features/chat/chat').then(m => m.Chat),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'top',
+                loadComponent: () => import('./features/top/top').then(m => m.Top),
+                canActivate: [authGuard]
+            },
+            {
                 path: '**',
                 loadComponent: () => import('./features/home/home').then(m => m.Home)
             }
