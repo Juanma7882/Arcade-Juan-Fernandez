@@ -1,8 +1,8 @@
 <section>
-  <app-ahorcados> </app-ahorcados>
+  <!-- <app-ahorcados> </app-ahorcados>
   <app-mayor-menor></app-mayor-menor>
   <app-preguntados></app-preguntados>
-  <app-la-vivorita></app-la-vivorita>
+  <app-la-vivorita></app-la-vivorita> -->
 </section>
 <section
   class="w-full min-h-dvh flex items-center justify-center flex-col gap-12 py-12 bg-gradient-to-t from-black via-slate-950 to-gray-950 w-full h-full"
@@ -15,18 +15,23 @@
     </div>
 
     <div class="flex flex-wrap gap-4">
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
+      <app-card titulo="el ahorcado" imagen="ahorcado .jpg" ruta="/games/ahorcado"></app-card>
+      <app-card
+        titulo="el mayor menor"
+        imagen="mayor_menor.jpg"
+        ruta="/games/mayor-menor"
+      ></app-card>
+      <app-card titulo="preguntados" imagen="preguntados.jpg" ruta="/games/preguntados"></app-card>
+      <app-card titulo="la Viborita" imagen="la-viborita.jpg" ruta="/games/la-viborita"></app-card>
     </div>
   </div>
 
   <!-- Divisor -->
-  <!-- <div
+  <div
     class="w-[95%] md:w-[80%] h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent"
-  ></div> -->
+  ></div>
 
-  <!-- Juegos recomendados -->
+  <!--  Juegos recomendados -->
   <div class="w-[95%] md:w-[80%] flex flex-col gap-6">
     <div class="flex items-center gap-3">
       <span class="w-1 h-6 bg-pink-500 rounded-full inline-block"></span>
@@ -34,9 +39,14 @@
     </div>
 
     <div class="flex flex-wrap gap-4">
-      <app-card></app-card>
-      <app-card></app-card>
-      <app-card></app-card>
+      <app-card titulo="el ahorcado" imagen="ahorcado .jpg" ruta="/games/ahorcado"></app-card>
+      <app-card
+        titulo="el mayor menor"
+        imagen="mayor_menor.jpg"
+        ruta="/games/mayor-menor"
+      ></app-card>
+      <app-card titulo="preguntados" imagen="preguntados.jpg" ruta="/games/preguntados"></app-card>
+      <app-card titulo="la Viborita" imagen="la-viborita.jpg" ruta="/games/la-viborita"></app-card>
     </div>
   </div>
 </section>

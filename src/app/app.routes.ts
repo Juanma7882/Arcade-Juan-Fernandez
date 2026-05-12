@@ -32,6 +32,26 @@ export const routes: Routes = [
                 canActivate: [authGuard]
             },
             {
+                path: 'games/ahorcado',
+                loadComponent: () => import('./features/games/components/ahorcados/ahorcados').then(m => m.Ahorcados),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'games/la-viborita',
+                loadComponent: () => import('./features/games/components/la-vivorita/la-vivorita').then(m => m.LaVivorita),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'games/mayor-menor',
+                loadComponent: () => import('./features/games/components/mayor-menor/mayor-menor').then(m => m.MayorMenor),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'games/preguntados',
+                loadComponent: () => import('./features/games/components/preguntados/preguntados').then(m => m.Preguntados),
+                canActivate: [authGuard]
+            },
+            {
                 path: 'chat',
                 loadComponent: () => import('./features/chat/chat').then(m => m.Chat),
                 canActivate: [authGuard]

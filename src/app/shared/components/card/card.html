@@ -2,12 +2,8 @@
   class="relative w-52 rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer hover:-translate-y-1 transition-transform duration-200"
 >
   <!-- Imagen -->
-  <div class="relative aspect-[3/4]">
-    <img
-      src="https://media.vandal.net/i/640x360/6-2025/27/202562713493167_1.jpg"
-      alt="Diablo 4"
-      class="w-full h-full object-cover"
-    />
+  <div (click)="redirigir()" class="relative aspect-[3/4]">
+    <img [src]="imagen" alt="Diablo 4" class="w-full h-full object-cover" />
 
     <!-- Fade inferior -->
     <div
@@ -23,7 +19,9 @@
 
     <!-- Título y pills encima del fade -->
     <div class="absolute bottom-0 left-0 right-0 p-3.5">
-      <h2 class="font-black text-2xl text-amber-50 tracking-wide leading-none mb-2.5">pragmata</h2>
+      <h2 class="font-black text-2xl text-amber-50 tracking-wide leading-none mb-2.5">
+        {{ titulo }}
+      </h2>
 
       <div class="flex items-center gap-2 flex-wrap">
         <!-- Jugadores -->
