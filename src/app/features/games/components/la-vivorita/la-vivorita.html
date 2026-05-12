@@ -1,1 +1,181 @@
-<p>la-vivorita works!</p>
+<section class="min-h-dvh bg-gradient-to-br from-gray-950 via-slate-900 to-black text-white p-6">
+  <!-- Header -->
+  <div class="max-w-4xl mx-auto mb-6">
+    <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl backdrop-blur-sm">
+      <div>
+        <h1
+          class="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
+        >
+          🐍 La Viborita
+        </h1>
+        <p class="text-xs text-gray-400 mt-1">Usa las flechas del teclado para moverte</p>
+      </div>
+      <div class="flex gap-6">
+        <div class="text-center">
+          <p class="text-xs text-gray-400">Puntuación</p>
+          <p class="text-2xl font-bold text-green-400">{{ puntuacion() }}</p>
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-400">Tiempo</p>
+          <p class="text-2xl font-bold font-mono text-yellow-400">{{ tiempoFormateado }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tablero de juego -->
+  <div class="flex justify-center items-center">
+    <div class="relative">
+      <!-- Canvas del juego -->
+      <div class="bg-gray-900/50 rounded-2xl p-4 backdrop-blur-sm">
+        <div
+          class="relative"
+          [style.width.px]="TAMANO * TAMANO_CELDA"
+          [style.height.px]="TAMANO * TAMANO_CELDA"
+        >
+          <!-- Grid - Versión corregida -->
+          @for (y of gridArray; track y) {
+            @for (x of gridArray; track x) {
+              <div
+                class="absolute border border-white/5"
+                [style.left.px]="x * TAMANO_CELDA"
+                [style.top.px]="y * TAMANO_CELDA"
+                [style.width.px]="TAMANO_CELDA"
+                [style.height.px]="TAMANO_CELDA"
+              ></div>
+            }
+          }
+
+          <!-- Comida -->
+          <div
+            class="absolute transition-all duration-100"
+            [style.transform]="
+              'translate(' + comida().x * TAMANO_CELDA + 'px, ' + comida().y * TAMANO_CELDA + 'px)'
+            "
+            [style.width.px]="TAMANO_CELDA"
+            [style.height.px]="TAMANO_CELDA"
+          >
+            <div class="w-full h-full flex items-center justify-center text-2xl animate-bounce">
+              🍎
+            </div>
+          </div>
+
+          <!-- Serpiente -->
+          @for (segmento of snake(); track segmento; let i = $index) {
+            <div
+              class="absolute transition-all duration-100 rounded-sm"
+              [style.transform]="
+                'translate(' +
+                segmento.x * TAMANO_CELDA +
+                'px, ' +
+                segmento.y * TAMANO_CELDA +
+                'px)'
+              "
+              [style.width.px]="TAMANO_CELDA - 2"
+              [style.height.px]="TAMANO_CELDA - 2"
+              [style.margin.px]="1"
+              [style.backgroundColor]="getColorSnake(i)"
+              [class.rounded-full]="i === 0"
+            ></div>
+          }
+        </div>
+      </div>
+
+      <!-- Overlay de inicio -->
+      @if (!juegoIniciado() && !gameOver()) {
+        <div
+          class="absolute inset-0 flex items-center justify-center bg-black/80 rounded-2xl backdrop-blur-sm"
+        >
+          <div class="text-center">
+            <div class="text-6xl mb-4">🐍</div>
+            <h2 class="text-2xl font-bold mb-2">¿Listo para jugar?</h2>
+            <p class="text-gray-400 mb-4">Presiona cualquier tecla de flecha para comenzar</p>
+            <button
+              (click)="iniciarJuego()"
+              class="px-8 py-3 bg-green-600 rounded-xl hover:bg-green-700 transition-colors font-bold"
+            >
+              Comenzar juego →
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- Overlay de game over -->
+      @if (gameOver()) {
+        <div
+          class="absolute inset-0 flex items-center justify-center bg-black/90 rounded-2xl backdrop-blur-sm"
+        >
+          <div class="text-center p-6">
+            <div class="text-8xl mb-4">💀</div>
+            <h2 class="text-3xl font-bold mb-2">¡Game Over!</h2>
+            <p class="text-2xl text-green-400 mb-2">Puntuación: {{ puntuacion() }}</p>
+            <p class="text-gray-400 mb-4">Largo de la serpiente: {{ snake().length }}</p>
+
+            <div class="flex gap-3 justify-center">
+              <button
+                (click)="resetearJuego()"
+                class="px-6 py-2 bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+              >
+                🔄 Jugar de nuevo
+              </button>
+              <button
+                (click)="guardarPartida()"
+                class="px-6 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                💾 Guardar puntuación
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Controles táctiles para móvil -->
+  <div class="mt-8 max-w-md mx-auto md:hidden">
+    <div class="grid grid-cols-3 gap-2 max-w-[200px] mx-auto">
+      <div></div>
+      <button
+        (click)="cambiarDireccion('UP')"
+        class="p-4 bg-white/10 rounded-xl active:bg-white/20 transition-colors text-2xl"
+      >
+        ▲
+      </button>
+      <div></div>
+      <button
+        (click)="cambiarDireccion('LEFT')"
+        class="p-4 bg-white/10 rounded-xl active:bg-white/20 transition-colors text-2xl"
+      >
+        ◀
+      </button>
+      <button
+        (click)="cambiarDireccion('DOWN')"
+        class="p-4 bg-white/10 rounded-xl active:bg-white/20 transition-colors text-2xl"
+      >
+        ▼
+      </button>
+      <button
+        (click)="cambiarDireccion('RIGHT')"
+        class="p-4 bg-white/10 rounded-xl active:bg-white/20 transition-colors text-2xl"
+      >
+        ▶
+      </button>
+    </div>
+  </div>
+
+  <!-- Info adicional -->
+  <div class="mt-8 max-w-md mx-auto text-center text-xs text-gray-500">
+    <p>🎯 Cada comida vale 10 puntos</p>
+    <p>⚡ La velocidad aumenta cada 50 puntos</p>
+    <p>🏆 Alcanza 100 puntos para ganar</p>
+  </div>
+
+  <!-- Mensaje de guardado -->
+  @if (mensajeGuardado()) {
+    <div
+      class="fixed bottom-4 right-4 bg-black/90 text-white px-4 py-2 rounded-lg text-sm animate-fade-in"
+    >
+      {{ mensajeGuardado() }}
+    </div>
+  }
+</section>

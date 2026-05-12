@@ -1,0 +1,46 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 0.5s ease-in-out infinite;
+}
+
+/* Mejoras visuales para el tablero */
+canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* Transiciones suaves para la serpiente */
+.absolute {
+  transition: transform 0.05s linear;
+}
+
+/* Efecto hover en botones táctiles */
+@media (max-width: 768px) {
+  button:active {
+    transform: scale(0.95);
+  }
+}

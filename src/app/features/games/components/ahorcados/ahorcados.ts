@@ -1,5 +1,6 @@
 import { Component, NgZone, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GuardarPartidaSupabaseService } from '../../../../core/services/guardar-partida.supabase.service';
 
 @Component({
   selector: 'app-ahorcados',
@@ -88,9 +89,12 @@ export class Ahorcados {
 
   letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
+  mensajeGuardado = '';
+
   juegoIniciado: boolean = false;
   juegoFinalizado: boolean = false;
   ganoTodo: boolean = false;
+
 
   palabraActual: string = '';
   letrasAdivinadas: Set<string> = new Set();
@@ -106,7 +110,10 @@ export class Ahorcados {
   tiempoTranscurrido = signal(0); // En segundos
   intervaloTiempo: any;
 
-  constructor(private ngZone: NgZone) {
+  private fechaInicioPartida: Date | null = null;
+  private idPartidaActual: string = Math.random().toString(36); // ID temporal
+
+  constructor(private ngZone: NgZone, private guardarPartidaService: GuardarPartidaSupabaseService) {
   }
   get tiempoFormateado(): string {
     const minutos = Math.floor(this.tiempoTranscurrido() / 60);
@@ -136,6 +143,9 @@ export class Ahorcados {
     if (this.intervaloTiempo) {
       clearInterval(this.intervaloTiempo);
     }
+    if (this.juegoIniciado && !this.juegoFinalizado) {
+      this.guardarPartida(this.puntuacion, this.gano);
+    }
   }
 
   iniciarJuego() {
@@ -144,12 +154,14 @@ export class Ahorcados {
     this.puntuacion = 0;
     this.letrasTotalesTocadas = 0;
     this.palabrasAdivinadas = [];
+    this.idPartidaActual = Math.random().toString(36); // Nuevo ID para cada partida
+    this.fechaInicioPartida = new Date(); // Guardar fecha de inicio
     this.resetearCronometro();
     this.palabraActual = this.PALABRAS[Math.floor(Math.random() * this.PALABRAS.length)];
     this.letrasAdivinadas = new Set();
     this.letrasErradas = new Set();
     this.letrasTocadas = new Set();
-    console.log(this.palabraActual)
+    // console.log(this.palabraActual)
     this.palabrasDisponibles = this.PALABRAS
   }
 
@@ -157,12 +169,21 @@ export class Ahorcados {
     this.palabrasDisponibles = this.palabrasDisponibles.filter(p => p !== this.palabraActual)
     this.letrasTotalesTocadas += this.letrasTocadas.size;
     this.palabrasAdivinadas.push(this.palabraActual)
-    console.log(this.palabrasDisponibles)
+
+    if (this.palabrasDisponibles.length === 0 && this.juegoIniciado === true) {
+      this.ganoTodo = true;
+      this.juegoFinalizado = true;
+      this.guardarPartida(this.puntuacion, true);
+      clearInterval(this.intervaloTiempo);
+      return;
+    }
+
+    // console.log(this.palabrasDisponibles)
     this.palabraActual = this.palabrasDisponibles[Math.floor(Math.random() * this.palabrasDisponibles.length)];
     this.letrasAdivinadas = new Set();
     this.letrasErradas = new Set();
     this.letrasTocadas = new Set();
-    console.log(this.palabraActual)
+    // console.log(this.palabraActual)
   }
 
   get errores(): number {
@@ -197,19 +218,49 @@ export class Ahorcados {
   verificarFinJuego() {
     if (this.perdio || this.palabrasDisponibles.length === 0) {
       this.juegoFinalizado = true;
+
+      if (this.perdio && this.juegoIniciado) {
+        this.guardarPartida(this.puntuacion, false);
+      } else if (this.palabrasDisponibles.length === 0 && this.juegoIniciado) {
+        this.guardarPartida(this.puntuacion, true);
+      }
     }
-    console.log(this.palabrasDisponibles.length)
+
     if (this.gano) {
       this.puntuacion += 100;
     }
 
     if (!this.perdio && this.palabrasDisponibles.length === 1 && this.juegoIniciado === true) {
-      this.ganoTodo = true
+      this.ganoTodo = true;
       clearInterval(this.intervaloTiempo);
     }
-
   }
 
+
+  private async guardarPartida(puntuacionFinal: number, gano: boolean) {
+    try {
+      const gameSession = {
+        won: gano,
+        score: puntuacionFinal,
+        duration_seconds: this.tiempoTranscurrido(),
+        data: {
+          palabra_actual: this.palabraActual,
+          palabras_adivinadas: this.palabrasAdivinadas,
+          errores_cometidos: this.errores,
+          letras_totales_tocadas: this.letrasTotalesTocadas,
+          palabras_disponibles_restantes: this.palabrasDisponibles.length,
+          fecha_inicio: this.fechaInicioPartida?.toISOString(),
+          id_partida: this.idPartidaActual
+        },
+        game_type: 'el_ahorcado' as const
+      };
+
+      await this.guardarPartidaService.saveGameSession(gameSession);
+      this.mensajeGuardado = '✅ Partida guardada';
+    } catch (error) {
+      this.mensajeGuardado = '❌ Partida no se pudo guardar';
+    }
+  }
 
   seleccionarLetra(letra: string) {
     if (this.juegoFinalizado || this.letrasTocadas.has(letra)) return;

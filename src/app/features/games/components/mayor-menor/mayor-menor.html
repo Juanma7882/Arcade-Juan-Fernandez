@@ -46,7 +46,17 @@
         <span class="text-2xl font-bold font-display text-amber-50">{{ record() }}</span>
       </div>
     </div>
-
+    @if (mensajeGuardado()) {
+      <div class="text-xs text-center animate-pulse">
+        <p
+          [class.text-green-400]="mensajeGuardado()?.includes('✅')"
+          [class.text-red-400]="mensajeGuardado()?.includes('❌')"
+          [class.text-yellow-400]="mensajeGuardado()?.includes('⚠️')"
+        >
+          {{ mensajeGuardado() }}
+        </p>
+      </div>
+    }
     <!-- Table felt -->
     <div
       class="table-felt relative flex items-center justify-center gap-10 w-full max-w-md rounded-[120px] px-12 py-8 border border-white/[0.07]"

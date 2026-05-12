@@ -1,1 +1,321 @@
-<p>preguntados works!</p>
+<section
+  class="game-root w-full min-h-dvh flex flex-col items-center justify-center gap-8 py-12 px-4 bg-gradient-to-b from-gray-950 via-slate-950 to-black text-amber-50"
+>
+  <!-- Error Message -->
+  @if (errorMsg()) {
+    <div class="flex flex-col items-center justify-center gap-4">
+      <p class="text-red-400">{{ errorMsg() }}</p>
+      <button
+        (click)="cargarPreguntas()"
+        class="px-6 py-2 bg-white/10 rounded-lg hover:bg-white/20"
+      >
+        Reintentar
+      </button>
+    </div>
+  }
+
+  @if (!errorMsg() && !loading()) {
+    <!-- Selección de Categoría -->
+    @if (gameStep() === 'categoria') {
+      <div class="flex flex-col items-center justify-center gap-12 py-12">
+        <h1
+          class="text-5xl font-bold text-center bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent p-3"
+        >
+          Preguntados
+        </h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+          <!-- Tecnología: Azul metálico -->
+          <button
+            (click)="seleccionarCategoria('tecnologia')"
+            class="group relative overflow-hidden rounded-2xl p-8 transition-all hover:scale-105"
+            style="
+              background: linear-gradient(
+                135deg,
+                #a8c8f8 0%,
+                #4a90d9 30%,
+                #1a5fa8 60%,
+                #7eb8f7 80%,
+                #b8d8ff 100%
+              );
+            "
+          >
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">💻</span>
+              <h2
+                class="text-2xl font-bold"
+                style="color: #e8f4ff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)"
+              >
+                Tecnología
+              </h2>
+              <p class="text-sm mt-2" style="color: #c0dcf8">
+                Pon a prueba tus conocimientos técnicos
+              </p>
+            </div>
+            <!-- Brillo metálico -->
+            <div
+              class="absolute inset-0 opacity-30"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(255, 255, 255, 0.6) 0%,
+                  transparent 50%,
+                  rgba(255, 255, 255, 0.2) 100%
+                );
+              "
+            ></div>
+          </button>
+
+          <!-- Biología: Verde metálico -->
+          <button
+            (click)="seleccionarCategoria('biologia')"
+            class="group relative overflow-hidden rounded-2xl p-8 transition-all hover:scale-105"
+            style="
+              background: linear-gradient(
+                135deg,
+                #a8e6c8 0%,
+                #527a66 30%,
+                #24724b 60%,
+                #59b488 80%,
+                #1a7a4a 100%
+              );
+            "
+          >
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">🧬</span>
+              <h2
+                class="text-2xl font-bold"
+                style="color: #e8fff4; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)"
+              >
+                Biología
+              </h2>
+              <p class="text-sm mt-2" style="color: #b0e8cc">Explora el mundo de la vida</p>
+            </div>
+            <div
+              class="absolute inset-0 opacity-30"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(255, 255, 255, 0.6) 0%,
+                  transparent 50%,
+                  rgba(255, 255, 255, 0.2) 100%
+                );
+              "
+            ></div>
+          </button>
+
+          <!-- Química: Rosa metálico -->
+          <button
+            (click)="seleccionarCategoria('quimica')"
+            class="group relative overflow-hidden rounded-2xl p-8 transition-all hover:scale-105"
+            style="
+              background: linear-gradient(
+                135deg,
+                #d94a7a 0%,
+                #a81a50 30%,
+                #d94a7a 60%,
+                #a81a50 80%,
+                #d94a7a 100%
+              );
+            "
+          >
+            <!-- #f8c0d8 0%,
+                #d94a7a 30%,
+                #a81a50 60%,
+                #f07eaa 80%,
+                #ffd8e8 100% -->
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">🧪</span>
+              <h2
+                class="text-2xl font-bold"
+                style="color: #fff0f5; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4)"
+              >
+                Química
+              </h2>
+              <p class="text-sm mt-2" style="color: #f0b0c8">Descubre los elementos</p>
+            </div>
+            <div
+              class="absolute inset-0 opacity-30"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(255, 255, 255, 0.6) 0%,
+                  transparent 50%,
+                  rgba(255, 255, 255, 0.2) 100%
+                );
+              "
+            ></div>
+          </button>
+        </div>
+        <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+
+          <button
+            (click)="seleccionarCategoria('tecnologia')"
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-600 p-8 transition-all hover:scale-105"
+          >
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">💻</span>
+              <h2 class="text-2xl font-bold">Tecnología</h2>
+              <p class="text-sm opacity-80 mt-2">Pon a prueba tus conocimientos técnicos</p>
+            </div>
+          </button>
+
+          <button
+            (click)="seleccionarCategoria('biologia')"
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-600 to-emerald-600 p-8 transition-all hover:scale-105"
+          >
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">🧬</span>
+              <h2 class="text-2xl font-bold">Biología</h2>
+              <p class="text-sm opacity-80 mt-2">Explora el mundo de la vida</p>
+            </div>
+          </button>
+
+          <button
+            (click)="seleccionarCategoria('quimica')"
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 p-8 transition-all hover:scale-105"
+          >
+            <div class="relative z-10">
+              <span class="text-6xl block mb-4">🧪</span>
+              <h2 class="text-2xl font-bold">Química</h2>
+              <p class="text-sm opacity-80 mt-2">Descubre los elementos</p>
+            </div>
+          </button>
+        </div> -->
+      </div>
+    }
+
+    <!-- Juego en Progreso -->
+    @if (gameStep() === 'jugando') {
+      <div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8 p-4 bg-white/5 rounded-xl">
+          <div class="flex gap-6">
+            <div>
+              <p class="text-xs text-gray-400">Pregunta</p>
+              <p class="text-2xl font-bold">{{ indiceActual() + 1 }}/{{ preguntas().length }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400">Puntuación</p>
+              <p class="text-2xl font-bold text-yellow-400">{{ puntuacion() }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400">Tiempo</p>
+              <p class="text-2xl font-bold font-mono">{{ tiempoFormateado }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pregunta -->
+        <div class="bg-white/10 rounded-2xl p-8 mb-8 backdrop-blur-sm">
+          <h2 class="text-2xl font-bold text-center">
+            {{ preguntaActual()?.pregunta }}
+          </h2>
+        </div>
+
+        <!-- Opciones -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          @for (opcion of preguntaActual()?.opciones; track opcion) {
+            <button
+              (click)="seleccionarOpcion(opcion)"
+              [disabled]="mostrarFeedback()"
+              [class]="getClaseOpcion(opcion)"
+              class="p-4 rounded-xl text-left transition-all duration-200 font-medium"
+            >
+              {{ opcion }}
+            </button>
+          }
+        </div>
+
+        <!-- Feedback -->
+        @if (mostrarFeedback()) {
+          <div class="mt-6 text-center animate-bounce">
+            @if (esCorrecta()) {
+              <div class="text-green-400 text-xl">✓ ¡Correcto! +100 puntos</div>
+            } @else {
+              <div class="text-red-400 text-xl">
+                ✗ Incorrecto<br />
+                <span class="text-sm"
+                  >La respuesta correcta era: {{ preguntaActual()?.correcta }}</span
+                >
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Resultados Finales -->
+    @if (gameStep() === 'resultado') {
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+          <h1 class="text-4xl font-bold mb-4">🎉 Partida Finalizada 🎉</h1>
+          <div class="bg-white/10 rounded-2xl p-6">
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <p class="text-gray-400 text-sm">Categoría</p>
+                <p class="text-xl font-bold capitalize">{{ categoriaSeleccionada() }}</p>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Tiempo</p>
+                <p class="text-xl font-bold">{{ tiempoFormateado }}</p>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Aciertos</p>
+                <p class="text-3xl font-bold text-green-400">
+                  {{ aciertos() }}/{{ preguntas().length }}
+                </p>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Puntuación Final</p>
+                <p class="text-3xl font-bold text-yellow-400">{{ puntuacion() }}</p>
+              </div>
+            </div>
+
+            <div class="w-full bg-white/20 rounded-full h-4 mb-6">
+              <div
+                class="bg-gradient-to-r from-green-400 to-yellow-400 h-4 rounded-full transition-all duration-1000"
+                [style.width.%]="porcentajeAciertos"
+              ></div>
+            </div>
+
+            <div class="flex gap-4 justify-center">
+              <button
+                (click)="volverACategorias()"
+                class="px-6 py-3 bg-purple-600 rounded-xl hover:bg-purple-700 transition-colors"
+              >
+                ← Elegir otra categoría
+              </button>
+              <button
+                (click)="seleccionarCategoria(categoriaSeleccionada())"
+                class="px-6 py-3 bg-green-600 rounded-xl hover:bg-green-700 transition-colors"
+              >
+                🔄 Jugar de nuevo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  }
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="flex items-center justify-center h-screen">
+      <div class="text-center">
+        <div
+          class="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent mx-auto mb-4"
+        ></div>
+        <p>Cargando preguntas...</p>
+      </div>
+    </div>
+  }
+
+  <!-- Mensaje de guardado -->
+  @if (mensajeGuardado()) {
+    <div
+      class="fixed bottom-4 right-4 bg-black/90 text-white px-4 py-2 rounded-lg text-sm animate-fade-in"
+    >
+      {{ mensajeGuardado() }}
+    </div>
+  }
+</section>

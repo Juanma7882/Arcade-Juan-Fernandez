@@ -8,6 +8,8 @@ export type GameType =
     | 'preguntados';
 
 export interface GameSession {
+    id?: number;
+    user_uid?: string;
     won: boolean;
     score: number;
     duration_seconds?: number;

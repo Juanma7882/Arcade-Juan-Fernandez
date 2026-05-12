@@ -1,6 +1,7 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeckService, Card } from './deck.service';
+import { GuardarPartidaSupabaseService } from '../../../../core/services/guardar-partida.supabase.service';
 
 type GuessResult = 'mayor' | 'menor' | 'igual';
 type GamePhase = 'idle' | 'loading' | 'waiting' | 'revealing' | 'done';
@@ -19,7 +20,12 @@ const RANK_VALUE: Record<string, number> = {
 export class MayorMenor {
 
   private deckService = inject(DeckService);
+  private guardarPartidaService = inject(GuardarPartidaSupabaseService);
 
+  mensajeGuardado = signal<string | null>(null);
+  private idPartidaActual = signal<string>(Math.random().toString(36));
+  private fechaInicioPartida = signal<Date | null>(null);
+  private partidaGuardada = signal<boolean>(false);
   // --- State ---
   phase = signal<GamePhase>('idle');
   deckId = signal<string | null>(null);
@@ -44,6 +50,7 @@ export class MayorMenor {
   isRevealing = computed(() => this.phase() === 'revealing');
   isLoading = computed(() => this.phase() === 'loading');
 
+
   resultText = computed(() => {
     const r = this.lastResult();
     const correct = this.lastCorrect();
@@ -61,6 +68,10 @@ export class MayorMenor {
   initDeck(): void {
     this.phase.set('loading');
     this.errorMsg.set(null);
+    // Registrar inicio de partida si es nuevo juego
+    if (!this.fechaInicioPartida()) {
+      this.fechaInicioPartida.set(new Date());
+    }
     this.deckService.newDeck().subscribe({
       next: (res) => {
         this.deckId.set(res.deck_id);
@@ -102,9 +113,17 @@ export class MayorMenor {
       this.streak.update(s => s + 1);
       if (this.points() > this.record()) this.record.set(this.points());
       this.lastResult.set('win');
+
+      if (this.points() >= 500 && !this.partidaGuardada()) {
+        this.guardarPartida(true);
+      }
     } else {
       this.life.update(l => l - 1)
       this.lastResult.set('lose');
+
+      if (this.life() === 0) {
+        this.guardarPartida(false);
+      }
     }
   }
 
@@ -144,12 +163,72 @@ export class MayorMenor {
   }
 
   resetGame(): void {
+    // Guardar la partida actual antes de resetear (si no se había guardado)
+    if (!this.partidaGuardada() && this.points() > 0) {
+      this.guardarPartida(false);
+    }
+
     this.points.set(0);
     this.streak.set(0);
     this.life.set(3);
     this.errorMsg.set(null);
     this.lastResult.set(null);
+    this.partidaGuardada.set(false);
+    this.idPartidaActual.set(Math.random().toString(36));
+    this.fechaInicioPartida.set(new Date());
     this.initDeck();
   }
 
+  private async guardarPartida(gano: boolean = false) {
+    try {
+      // Verificar si hay sesión activa
+      const session = await this.guardarPartidaService['supabaseService'].getSession();
+      if (!session) {
+        this.mensajeGuardado.set('⚠️ Inicia sesión para guardar');
+        setTimeout(() => this.mensajeGuardado.set(null), 3000);
+        return;
+      }
+
+      // Calcular tiempo transcurrido
+      const duracion = this.fechaInicioPartida()
+        ? Math.floor((Date.now() - this.fechaInicioPartida()!.getTime()) / 1000)
+        : 0;
+
+      const gameSession = {
+        won: gano,
+        score: this.points(),
+        duration_seconds: duracion,
+        data: {
+          max_streak: this.record(),
+          final_lives: this.life(),
+          deck_id: this.deckId(),
+          cards_remaining: this.remaining(),
+          id_partida: this.idPartidaActual(),
+          fecha_inicio: this.fechaInicioPartida()?.toISOString(),
+          game_state: {
+            phase: this.phase(),
+            current_card: this.currentCard()?.code,
+            last_result: this.lastResult(),
+            last_correct: this.lastCorrect()
+          }
+        },
+        game_type: 'mayor_menor' as const
+      };
+
+      await this.guardarPartidaService.saveGameSession(gameSession);
+      this.mensajeGuardado.set('✅ Partida guardada');
+      this.partidaGuardada.set(true);
+      setTimeout(() => this.mensajeGuardado.set(null), 3000);
+    } catch (error: any) {
+      console.error('Error al guardar partida:', error);
+      this.mensajeGuardado.set(`❌ Error: ${error.message || 'No se pudo guardar'}`);
+      setTimeout(() => this.mensajeGuardado.set(null), 5000);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.points() > 0 && !this.partidaGuardada() && this.life() > 0) {
+      this.guardarPartida(false);
+    }
+  }
 }

@@ -1,1 +1,227 @@
-<p>top works!</p>
+<section
+  class="min-h-dvh bg-gradient-to-br from-gray-950 via-slate-900 to-black text-white p-6 pt-24"
+>
+  <div class="max-w-6xl mx-auto">
+    <h1
+      class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"
+    >
+      🏆 Rankings Globales 🏆
+    </h1>
+
+    @if (loading()) {
+      <div class="flex justify-center items-center h-64">
+        <div class="text-center">
+          <div
+            class="animate-spin rounded-full h-16 w-16 border-4 border-yellow-400 border-t-transparent mx-auto mb-4"
+          ></div>
+          <p class="text-gray-400">Cargando rankings...</p>
+        </div>
+      </div>
+    }
+
+    @if (errorMsg()) {
+      <div class="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-center text-red-400">
+        {{ errorMsg() }}
+      </div>
+    }
+
+    @if (!loading() && !errorMsg()) {
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- La Viborita -->
+        <div class="bg-white/5 rounded-xl p-4 backdrop-blur-sm hover:bg-white/10 transition-all">
+          <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
+            <span class="text-3xl">🐍</span> La Viborita
+          </h2>
+          <div class="space-y-2 max-h-[400px] overflow-y-auto custom-scroll">
+            @if (topViborita().length === 0) {
+              <p class="text-gray-400 text-center py-8">Aún no hay partidas registradas</p>
+            }
+            @for (game of topViborita(); track game.id; let i = $index) {
+              <div
+                class="flex justify-between items-center p-3 bg-black/30 rounded-lg hover:bg-black/50 transition-colors"
+              >
+                <div class="flex items-center gap-3 flex-1">
+                  <span class="text-2xl font-bold w-10 text-center">
+                    {{ i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1) }}
+                  </span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="font-bold text-yellow-400 text-lg">{{ game.score }}</span>
+                      <span class="text-gray-400 text-sm">pts</span>
+                      <span
+                        class="text-xs px-2 py-0.5 rounded-full"
+                        [class.bg-green-500/20]="game.won"
+                        [class.text-green-400]="game.won"
+                        [class.bg-red-500/20]="!game.won"
+                        [class.text-red-400]="!game.won"
+                      >
+                        {{ game.won ? 'Victoria' : 'Derrota' }}
+                      </span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                      <span>👤 {{ getNombreCompleto(game) }}</span>
+                      <span>•</span>
+                      <span>⏱️ {{ game.duration_seconds }}s</span>
+                      @if (game.data['categoria']) {
+                        <span>• 📚 {{ game.data['categoria'] }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- El Ahorcado -->
+        <div class="bg-white/5 rounded-xl p-4 backdrop-blur-sm hover:bg-white/10 transition-all">
+          <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
+            <span class="text-3xl">🪢</span> El Ahorcado
+          </h2>
+          <div class="space-y-2 max-h-[400px] overflow-y-auto custom-scroll">
+            @if (topAhorcado().length === 0) {
+              <p class="text-gray-400 text-center py-8">Aún no hay partidas registradas</p>
+            }
+            @for (game of topAhorcado(); track game.id; let i = $index) {
+              <div
+                class="flex justify-between items-center p-3 bg-black/30 rounded-lg hover:bg-black/50 transition-colors"
+              >
+                <div class="flex items-center gap-3 flex-1">
+                  <span class="text-2xl font-bold w-10 text-center">
+                    {{ i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1) }}
+                  </span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="font-bold text-yellow-400 text-lg">{{ game.score }}</span>
+                      <span class="text-gray-400 text-sm">pts</span>
+                      <span
+                        class="text-xs px-2 py-0.5 rounded-full"
+                        [class.bg-green-500/20]="game.won"
+                        [class.text-green-400]="game.won"
+                        [class.bg-red-500/20]="!game.won"
+                        [class.text-red-400]="!game.won"
+                      >
+                        {{ game.won ? 'Victoria' : 'Derrota' }}
+                      </span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                      <span>👤 {{ getNombreCompleto(game) }}</span>
+                      <span>•</span>
+                      <span>⏱️ {{ game.duration_seconds }}s</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Mayor o Menor -->
+        <div class="bg-white/5 rounded-xl p-4 backdrop-blur-sm hover:bg-white/10 transition-all">
+          <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
+            <span class="text-3xl">🃏</span> Mayor o Menor
+          </h2>
+          <div class="space-y-2 max-h-[400px] overflow-y-auto custom-scroll">
+            @if (topMayorMenor().length === 0) {
+              <p class="text-gray-400 text-center py-8">Aún no hay partidas registradas</p>
+            }
+            @for (game of topMayorMenor(); track game.id; let i = $index) {
+              <div
+                class="flex justify-between items-center p-3 bg-black/30 rounded-lg hover:bg-black/50 transition-colors"
+              >
+                <div class="flex items-center gap-3 flex-1">
+                  <span class="text-2xl font-bold w-10 text-center">
+                    {{ i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1) }}
+                  </span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="font-bold text-yellow-400 text-lg">{{ game.score }}</span>
+                      <span class="text-gray-400 text-sm">pts</span>
+                      <span
+                        class="text-xs px-2 py-0.5 rounded-full"
+                        [class.bg-green-500/20]="game.won"
+                        [class.text-green-400]="game.won"
+                        [class.bg-red-500/20]="!game.won"
+                        [class.text-red-400]="!game.won"
+                      >
+                        {{ game.won ? 'Victoria' : 'Derrota' }}
+                      </span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                      <span>👤 {{ getNombreCompleto(game) }}</span>
+                      <span>•</span>
+                      <span>⏱️ {{ game.duration_seconds }}s</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Preguntados -->
+        <div class="bg-white/5 rounded-xl p-4 backdrop-blur-sm hover:bg-white/10 transition-all">
+          <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
+            <span class="text-3xl">❓</span> Preguntados
+          </h2>
+          <div class="space-y-2 max-h-[400px] overflow-y-auto custom-scroll">
+            @if (topPreguntados().length === 0) {
+              <p class="text-gray-400 text-center py-8">Aún no hay partidas registradas</p>
+            }
+            @for (game of topPreguntados(); track game.id; let i = $index) {
+              <div
+                class="flex justify-between items-center p-3 bg-black/30 rounded-lg hover:bg-black/50 transition-colors"
+              >
+                <div class="flex items-center gap-3 flex-1">
+                  <span class="text-2xl font-bold w-10 text-center">
+                    {{ i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1) }}
+                  </span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="font-bold text-yellow-400 text-lg">{{ game.score }}</span>
+                      <span class="text-gray-400 text-sm">pts</span>
+                      <span
+                        class="text-xs px-2 py-0.5 rounded-full"
+                        [class.bg-green-500/20]="game.won"
+                        [class.text-green-400]="game.won"
+                        [class.bg-red-500/20]="!game.won"
+                        [class.text-red-400]="!game.won"
+                      >
+                        {{ game.won ? 'Victoria' : 'Derrota' }}
+                      </span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                      <span>👤 {{ getNombreCompleto(game) }}</span>
+                      <span>•</span>
+                      <span>⏱️ {{ game.duration_seconds }}s</span>
+                      @if (game.data['categoria']) {
+                        <span>• 📚 {{ game.data['categoria'] }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<style>
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+</style>

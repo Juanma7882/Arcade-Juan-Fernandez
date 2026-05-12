@@ -38,7 +38,7 @@ export const routes: Routes = [
             },
             {
                 path: 'top',
-                loadComponent: () => import('./features/top/top').then(m => m.Top),
+                loadComponent: () => import('./features/top/top').then(m => m.TopComponent),
                 canActivate: [authGuard]
             },
             {

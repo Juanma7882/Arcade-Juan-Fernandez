@@ -1,0 +1,458 @@
+{
+    "tecnologia": [
+        {
+            "pregunta": "¿Qué significan las siglas 'HTML'?",
+            "opciones": [
+                "HyperText Markup Language",
+                "High Tech Modern Language",
+                "HyperLink Text Mode",
+                "Home Tool Markup Language"
+            ],
+            "correcta": "HyperText Markup Language"
+        },
+        {
+            "pregunta": "¿Cuál es el componente que actúa como el 'cerebro' de una computadora?",
+            "opciones": [
+                "Memoria RAM",
+                "Disco Duro",
+                "CPU (Procesador)",
+                "Tarjeta Gráfica"
+            ],
+            "correcta": "CPU (Procesador)"
+        },
+        {
+            "pregunta": "¿En qué año se lanzó el primer iPhone?",
+            "opciones": [
+                "2005",
+                "2007",
+                "2009",
+                "2010"
+            ],
+            "correcta": "2007"
+        },
+        {
+            "pregunta": "¿Qué lenguaje de programación es conocido por su logotipo de una pitón?",
+            "opciones": [
+                "Java",
+                "C++",
+                "Python",
+                "Ruby"
+            ],
+            "correcta": "Python"
+        },
+        {
+            "pregunta": "¿Qué significa 'Wi-Fi'?",
+            "opciones": [
+                "Wireless Fidelity",
+                "Wide Fiber",
+                "Wireless Firewall",
+                "Es un nombre comercial sin significado técnico directo"
+            ],
+            "correcta": "Es un nombre comercial sin significado técnico directo"
+        },
+        {
+            "pregunta": "¿Quién es considerado el padre de la computación?",
+            "opciones": [
+                "Bill Gates",
+                "Steve Jobs",
+                "Alan Turing",
+                "Mark Zuckerberg"
+            ],
+            "correcta": "Alan Turing"
+        },
+        {
+            "pregunta": "¿Cuál es el sistema operativo móvil más usado en el mundo?",
+            "opciones": [
+                "iOS",
+                "Windows Phone",
+                "Android",
+                "BlackBerry OS"
+            ],
+            "correcta": "Android"
+        },
+        {
+            "pregunta": "¿Qué unidad mide la resolución de una pantalla?",
+            "opciones": [
+                "Gigahercios",
+                "Píxeles",
+                "Bits",
+                "Amperios"
+            ],
+            "correcta": "Píxeles"
+        },
+        {
+            "pregunta": "¿Qué empresa desarrolló el buscador Google?",
+            "opciones": [
+                "Microsoft",
+                "Alphabet",
+                "Meta",
+                "Apple"
+            ],
+            "correcta": "Alphabet"
+        },
+        {
+            "pregunta": "¿Qué es la 'Nube' (Cloud computing)?",
+            "opciones": [
+                "Un satélite de internet",
+                "Servidores remotos en internet para guardar datos",
+                "Un tipo de antena Wi-Fi",
+                "Software de predicción climática"
+            ],
+            "correcta": "Servidores remotos en internet para guardar datos"
+        },
+        {
+            "pregunta": "¿Cuál es el protocolo estándar para enviar correos electrónicos?",
+            "opciones": [
+                "HTTP",
+                "FTP",
+                "SMTP",
+                "HTTPS"
+            ],
+            "correcta": "SMTP"
+        },
+        {
+            "pregunta": "¿Qué significa la 'U' en USB?",
+            "opciones": [
+                "Universal",
+                "Unit",
+                "User",
+                "Ultra"
+            ],
+            "correcta": "Universal"
+        },
+        {
+            "pregunta": "¿Quién fundó la red social Facebook?",
+            "opciones": [
+                "Jeff Bezos",
+                "Elon Musk",
+                "Mark Zuckerberg",
+                "Jack Dorsey"
+            ],
+            "correcta": "Mark Zuckerberg"
+        },
+        {
+            "pregunta": "¿Qué tecnología se usa para crear criptomonedas como Bitcoin?",
+            "opciones": [
+                "Big Data",
+                "Blockchain",
+                "IA",
+                "Realidad Virtual"
+            ],
+            "correcta": "Blockchain"
+        },
+        {
+            "pregunta": "¿Qué significa PDF?",
+            "opciones": [
+                "Personal Data File",
+                "Portable Document Format",
+                "Printable Digital Form",
+                "Public Data Format"
+            ],
+            "correcta": "Portable Document Format"
+        }
+    ],
+    "biologia": [
+        {
+            "pregunta": "¿Cuál es la unidad básica de la vida?",
+            "opciones": [
+                "Átomo",
+                "Célula",
+                "Tejido",
+                "Órgano"
+            ],
+            "correcta": "Célula"
+        },
+        {
+            "pregunta": "¿Qué molécula lleva la información genética?",
+            "opciones": [
+                "ARN",
+                "Proteína",
+                "ADN",
+                "Lípido"
+            ],
+            "correcta": "ADN"
+        },
+        {
+            "pregunta": "¿Qué proceso utilizan las plantas para fabricar su propio alimento?",
+            "opciones": [
+                "Respiración",
+                "Fotosíntesis",
+                "Combustión",
+                "Fermentación"
+            ],
+            "correcta": "Fotosíntesis"
+        },
+        {
+            "pregunta": "¿Cuál es el órgano más grande del cuerpo humano?",
+            "opciones": [
+                "Corazón",
+                "Hígado",
+                "Piel",
+                "Pulmones"
+            ],
+            "correcta": "Piel"
+        },
+        {
+            "pregunta": "¿Cómo se llaman los animales que nacen de un huevo?",
+            "opciones": [
+                "Vivíparos",
+                "Ovíparos",
+                "Mamíferos",
+                "Herbívoros"
+            ],
+            "correcta": "Ovíparos"
+        },
+        {
+            "pregunta": "¿Qué gas absorben las plantas de la atmósfera?",
+            "opciones": [
+                "Oxígeno",
+                "Nitrógeno",
+                "Dióxido de carbono",
+                "Helio"
+            ],
+            "correcta": "Dióxido de carbono"
+        },
+        {
+            "pregunta": "¿Cuántos huesos tiene el cuerpo humano adulto aproximadamente?",
+            "opciones": [
+                "150",
+                "206",
+                "300",
+                "250"
+            ],
+            "correcta": "206"
+        },
+        {
+            "pregunta": "¿Cuál es el principal músculo del sistema respiratorio?",
+            "opciones": [
+                "Bíceps",
+                "Diafragma",
+                "Abdominal",
+                "Glúteo"
+            ],
+            "correcta": "Diafragma"
+        },
+        {
+            "pregunta": "¿Quién propuso la teoría de la evolución por selección natural?",
+            "opciones": [
+                "Gregor Mendel",
+                "Louis Pasteur",
+                "Charles Darwin",
+                "Marie Curie"
+            ],
+            "correcta": "Charles Darwin"
+        },
+        {
+            "pregunta": "¿Cuál es la función principal de los glóbulos rojos?",
+            "opciones": [
+                "Defender el cuerpo",
+                "Transportar oxígeno",
+                "Cigarrar heridas",
+                "Digerir alimentos"
+            ],
+            "correcta": "Transportar oxígeno"
+        },
+        {
+            "pregunta": "¿Qué parte de la célula produce energía?",
+            "opciones": [
+                "Núcleo",
+                "Ribosoma",
+                "Mitocondria",
+                "Lisosoma"
+            ],
+            "correcta": "Mitocondria"
+        },
+        {
+            "pregunta": "¿Cuál es el animal terrestre más rápido del mundo?",
+            "opciones": [
+                "León",
+                "Guepardo",
+                "Caballo",
+                "Avestruz"
+            ],
+            "correcta": "Guepardo"
+        },
+        {
+            "pregunta": "¿A qué reino pertenecen los hongos?",
+            "opciones": [
+                "Plantae",
+                "Animalia",
+                "Fungi",
+                "Monera"
+            ],
+            "correcta": "Fungi"
+        },
+        {
+            "pregunta": "¿Cómo se llama la división celular que produce gametos?",
+            "opciones": [
+                "Mitosis",
+                "Meiosis",
+                "Fisión",
+                "Clonación"
+            ],
+            "correcta": "Meiosis"
+        },
+        {
+            "pregunta": "¿Qué órgano bombea la sangre a todo el cuerpo?",
+            "opciones": [
+                "Cerebro",
+                "Pulmón",
+                "Riñón",
+                "Corazón"
+            ],
+            "correcta": "Corazón"
+        }
+    ],
+    "quimica": [
+        {
+            "pregunta": "¿Cuál es el símbolo químico del Oro?",
+            "opciones": [
+                "Ag",
+                "Fe",
+                "Au",
+                "Or"
+            ],
+            "correcta": "Au"
+        },
+        {
+            "pregunta": "¿Cuál es el elemento más abundante en el universo?",
+            "opciones": [
+                "Oxígeno",
+                "Carbono",
+                "Hidrógeno",
+                "Helio"
+            ],
+            "correcta": "Hidrógeno"
+        },
+        {
+            "pregunta": "¿Qué pH tiene una sustancia neutra como el agua pura?",
+            "opciones": [
+                "0",
+                "7",
+                "14",
+                "5"
+            ],
+            "correcta": "7"
+        },
+        {
+            "pregunta": "¿Qué gas es esencial para que ocurra la combustión?",
+            "opciones": [
+                "Nitrógeno",
+                "Oxígeno",
+                "Argón",
+                "Neón"
+            ],
+            "correcta": "Oxígeno"
+        },
+        {
+            "pregunta": "¿Cuál es la fórmula química del agua?",
+            "opciones": [
+                "CO2",
+                "H2O",
+                "NaCl",
+                "HO2"
+            ],
+            "correcta": "H2O"
+        },
+        {
+            "pregunta": "¿Quién creó la tabla periódica de los elementos?",
+            "opciones": [
+                "Newton",
+                "Einstein",
+                "Mendeleiev",
+                "Dalton"
+            ],
+            "correcta": "Mendeleiev"
+        },
+        {
+            "pregunta": "¿Cómo se llaman las partículas con carga negativa en un átomo?",
+            "opciones": [
+                "Protones",
+                "Neutrones",
+                "Electrones",
+                "Positrones"
+            ],
+            "correcta": "Electrones"
+        },
+        {
+            "pregunta": "¿Qué es el NaCl?",
+            "opciones": [
+                "Azúcar",
+                "Bicarbonato",
+                "Sal común",
+                "Vinagre"
+            ],
+            "correcta": "Sal común"
+        },
+        {
+            "pregunta": "¿Cuál es el único metal que es líquido a temperatura ambiente?",
+            "opciones": [
+                "Plata",
+                "Plomo",
+                "Mercurio",
+                "Cobre"
+            ],
+            "correcta": "Mercurio"
+        },
+        {
+            "pregunta": "¿Qué elemento tiene el número atómico 1?",
+            "opciones": [
+                "Helio",
+                "Litio",
+                "Hidrógeno",
+                "Oxígeno"
+            ],
+            "correcta": "Hidrógeno"
+        },
+        {
+            "pregunta": "¿Qué tipo de enlace ocurre cuando se comparten electrones?",
+            "opciones": [
+                "Iónico",
+                "Covalente",
+                "Metálico",
+                "Puente de hidrógeno"
+            ],
+            "correcta": "Covalente"
+        },
+        {
+            "pregunta": "¿Cuál es el símbolo químico del Hierro?",
+            "opciones": [
+                "Hi",
+                "Ir",
+                "Fe",
+                "H"
+            ],
+            "correcta": "Fe"
+        },
+        {
+            "pregunta": "¿Cómo se llama el cambio de estado de gas a líquido?",
+            "opciones": [
+                "Sublimación",
+                "Evaporación",
+                "Condensación",
+                "Fusión"
+            ],
+            "correcta": "Condensación"
+        },
+        {
+            "pregunta": "¿Qué elemento es el componente principal de los diamantes?",
+            "opciones": [
+                "Silicio",
+                "Carbono",
+                "Azufre",
+                "Fósforo"
+            ],
+            "correcta": "Carbono"
+        },
+        {
+            "pregunta": "¿Cuál es el gas noble más ligero?",
+            "opciones": [
+                "Neón",
+                "Argón",
+                "Kriptón",
+                "Helio"
+            ],
+            "correcta": "Helio"
+        }
+    ]
+}
