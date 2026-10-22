@@ -1,0 +1,28 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": { "title": "Arcade - Ciclo de una partida", "locale": "es", "quality_profile": "showcase", "output": "docs/diagrams/ciclo-partida.html" },
+  "mainPath": ["idle", "playing", "won", "saving", "saved"],
+  "states": [
+    { "id": "idle", "type": "start", "label": "Sin iniciar", "sublabel": "pantalla de inicio", "step": "01" },
+    { "id": "playing", "type": "active", "label": "Jugando", "sublabel": "partida en curso", "step": "02" },
+    { "id": "won", "type": "success", "label": "Victoria", "sublabel": "won = true", "step": "03" },
+    { "id": "saving", "type": "active", "label": "Guardando", "sublabel": "saveGameSession", "step": "04" },
+    { "id": "saved", "type": "success", "label": "Guardada", "sublabel": "en game_sessions", "tag": "terminal", "step": "05" },
+    { "id": "lost", "type": "failure", "label": "Derrota", "sublabel": "won = false" },
+    { "id": "save_error", "type": "failure", "label": "Error al guardar", "sublabel": "sin sesion o error SQL", "tag": "terminal" }
+  ],
+  "transitions": [
+    { "id": "t-start", "from": "idle", "to": "playing", "label": "empezar" },
+    { "id": "t-win", "from": "playing", "to": "won", "label": "gana" },
+    { "id": "t-lose", "from": "playing", "to": "lost", "label": "pierde" },
+    { "id": "t-save-win", "from": "won", "to": "saving", "label": "guardar" },
+    { "id": "t-save-lose", "from": "lost", "to": "saving", "label": "guardar" },
+    { "id": "t-ok", "from": "saving", "to": "saved", "label": "INSERT ok", "variant": "emphasis" },
+    { "id": "t-err", "from": "saving", "to": "save_error", "label": "falla", "variant": "security" }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Resultado", "items": ["Victoria y derrota se guardan igual, con su puntaje"] },
+    { "dot": "rose", "title": "Error", "items": ["Sin sesion activa se lanza un error"] }
+  ]
+}

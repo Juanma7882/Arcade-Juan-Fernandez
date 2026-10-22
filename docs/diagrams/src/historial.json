@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "diagram_type": "timeline",
+  "meta": {
+    "title": "Arcade - Historial del proyecto",
+    "subtitle": "Commits reales del repositorio, con su hora local.",
+    "locale": "es",
+    "evidence": "observed",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "quality_profile": "showcase",
+    "output": "docs/diagrams/historial.html"
+  },
+  "lanes": [
+    { "id": "base", "label": "Base y layout" },
+    { "id": "auth", "label": "Autenticacion" },
+    { "id": "games", "label": "Juegos" },
+    { "id": "chat", "label": "Chat y datos" },
+    { "id": "docs", "label": "Documentacion" }
+  ],
+  "events": [
+    { "id": "c1", "at": "2026-04-20T19:17:31-03:00", "title": "First commit", "detail": "b4f62df", "lane": "base", "kind": "change" },
+    { "id": "c2", "at": "2026-04-20T20:19:00-03:00", "title": "Provider de videos", "detail": "6e85e69", "lane": "base", "kind": "change" },
+    { "id": "c3", "at": "2026-04-20T20:57:23-03:00", "title": "Navbar y layout", "detail": "e3d8a8d", "lane": "base", "kind": "change" },
+    { "id": "c4", "at": "2026-04-21T14:40:51-03:00", "title": "Login y register con validaciones", "detail": "2b5f6f8", "lane": "auth", "kind": "change" },
+    { "id": "c5", "at": "2026-04-22T18:39:08-03:00", "title": "Arreglo de estilos", "detail": "1190d40", "lane": "base", "kind": "change" },
+    { "id": "c6", "at": "2026-04-27T20:08:33-03:00", "title": "Logica del register y componentes de juegos", "detail": "59ad4fa", "lane": "auth", "kind": "change" },
+    { "id": "c7", "at": "2026-04-28T16:40:08-03:00", "title": "Sprint 2 terminado", "detail": "a37639f", "lane": "base", "kind": "recovery" },
+    { "id": "c8", "at": "2026-05-05T11:41:14-03:00", "title": "Juego del ahorcado", "detail": "70655b4", "lane": "games", "kind": "change" },
+    { "id": "c9", "at": "2026-05-05T19:08:02-03:00", "title": "Juego mayor o menor", "detail": "d6e238d", "lane": "games", "kind": "change" },
+    { "id": "c10", "at": "2026-05-05T22:42:54-03:00", "title": "Chat funcional", "detail": "3557519", "lane": "chat", "kind": "change" },
+    { "id": "c11", "at": "2026-05-06T19:06:10-03:00", "title": "Servicio para guardar partidas", "detail": "81c2d9e", "lane": "chat", "kind": "change" },
+    { "id": "c12", "at": "2026-05-12T18:33:17-03:00", "title": "Ultimos cambios", "detail": "e836a40", "lane": "base", "kind": "change" },
+    { "id": "c13", "at": "2026-05-12T19:38:48-03:00", "title": "Proyecto terminado", "detail": "d9963be", "lane": "base", "kind": "recovery" },
+    { "id": "c14", "at": "2026-10-22T01:45:30-03:00", "title": "README", "detail": "aaffd79", "lane": "docs", "kind": "action" },
+    { "id": "c15", "at": "2026-10-22T02:27:55-03:00", "title": "Capturas de pantalla", "detail": "dc63bd0", "lane": "docs", "kind": "action" }
+  ]
+}

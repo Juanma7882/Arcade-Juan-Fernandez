@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "diagram_type": "erd",
+  "meta": {
+    "title": "Arcade - Modelo de datos",
+    "locale": "es",
+    "output": "docs/diagrams/datos.html",
+    "quality_profile": "showcase"
+  },
+  "layout": { "mode": "grid", "gapY": 38, "gapX": 72 },
+  "entities": [
+    {
+      "id": "users", "label": "users", "tag": "perfil", "row": 0, "col": 0,
+      "attributes": [
+        { "name": "uid", "key": "pk" },
+        { "name": "nombre" },
+        { "name": "apellido" },
+        { "name": "email" }
+      ]
+    },
+    {
+      "id": "game_sessions", "label": "game_sessions", "tag": "juegos", "row": 0, "col": 1,
+      "attributes": [
+        { "name": "id", "key": "pk" },
+        { "name": "user_uid", "key": "fk", "references": "users.uid" },
+        { "name": "game_type" },
+        { "name": "won" },
+        { "name": "score" },
+        { "name": "duration_seconds" },
+        { "name": "data" }
+      ]
+    },
+    {
+      "id": "chat_messages", "label": "chat_messages", "tag": "chat", "row": 0, "col": 2,
+      "attributes": [
+        { "name": "id", "key": "pk" },
+        { "name": "user_uid", "key": "fk", "references": "users.uid" },
+        { "name": "mensaje" },
+        { "name": "created_at" }
+      ]
+    }
+  ],
+  "relationships": [
+    { "id": "sessions_user", "from": "game_sessions", "to": "users", "label": "juega", "fromCardinality": "many", "toCardinality": "one" },
+    { "id": "messages_user", "from": "chat_messages", "to": "users", "label": "escribe", "fromCardinality": "many", "toCardinality": "one" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "game_type", "items": ["la_viborita, el_ahorcado, mayor_menor, preguntados"] },
+    { "dot": "amber", "title": "Nota", "items": ["Columnas deducidas del codigo, sin tipos SQL confirmados"] }
+  ]
+}

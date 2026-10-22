@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": { "title": "Arcade - Estructura de src/app", "locale": "es", "quality_profile": "showcase", "output": "docs/diagrams/estructura.html" },
+  "layout": { "direction": "right" },
+  "nodes": [
+    { "id": "app", "label": "src/app", "sublabel": "Angular 21" },
+    { "id": "core", "label": "core", "parent": "app", "sublabel": "singletons" },
+    { "id": "guards", "label": "guards", "parent": "core", "sublabel": "auth / noAuth" },
+    { "id": "layouts", "label": "layouts", "parent": "core", "sublabel": "MainLayout" },
+    { "id": "models", "label": "models", "parent": "core", "sublabel": "pregunta.model" },
+    { "id": "services", "label": "services", "parent": "core", "sublabel": "auth, partidas, snake, preguntados" },
+    { "id": "features", "label": "features", "parent": "app", "sublabel": "lazy loading" },
+    { "id": "home", "label": "home", "parent": "features" },
+    { "id": "auth", "label": "auth", "parent": "features", "sublabel": "login, register" },
+    { "id": "games", "label": "games", "parent": "features" },
+    { "id": "ahorcados", "label": "ahorcados", "parent": "games" },
+    { "id": "viborita", "label": "la-vivorita", "parent": "games" },
+    { "id": "mayor", "label": "mayor-menor", "parent": "games" },
+    { "id": "preguntados", "label": "preguntados", "parent": "games" },
+    { "id": "chat", "label": "chat", "parent": "features" },
+    { "id": "top", "label": "top", "parent": "features" },
+    { "id": "about", "label": "about-me", "parent": "features" },
+    { "id": "shared", "label": "shared/components", "parent": "app" },
+    { "id": "card", "label": "card", "parent": "shared" },
+    { "id": "navbar", "label": "navbar", "parent": "shared" },
+    { "id": "env", "label": "environments", "parent": "app" }
+  ]
+}

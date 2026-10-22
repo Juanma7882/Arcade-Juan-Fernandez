@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": { "title": "Arcade - Navegacion y guards", "locale": "es", "quality_profile": "showcase", "output": "docs/diagrams/navegacion.html" },
+  "lanes": [
+    { "id": "ui", "label": "Usuario" },
+    { "id": "router", "label": "Angular Router" },
+    { "id": "guards", "label": "Guards", "variant": "exception" },
+    { "id": "views", "label": "Vistas" }
+  ],
+  "mainPath": ["visit", "router", "authg", "protected"],
+  "nodes": [
+    { "id": "visit", "lane": "ui", "col": 0, "type": "external", "label": "Visitante", "sublabel": "abre una ruta" },
+    { "id": "router", "lane": "router", "col": 1, "type": "frontend", "label": "Router", "sublabel": "MainLayout" },
+    { "id": "noauth", "lane": "guards", "col": 2, "type": "security", "label": "noAuthGuard", "sublabel": "rutas /auth/*" },
+    { "id": "authg", "lane": "guards", "col": 3, "type": "security", "label": "authGuard", "sublabel": "getSession()" },
+    { "id": "public", "lane": "views", "col": 2, "type": "frontend", "label": "Home", "sublabel": "/, /home, **" },
+    { "id": "login", "lane": "views", "col": 3, "type": "frontend", "label": "Login / Registro", "sublabel": "/auth/*" },
+    { "id": "protected", "lane": "views", "col": 4, "type": "frontend", "label": "Vistas protegidas", "sublabel": "games, chat, top, about-me" }
+  ],
+  "edges": [
+    { "id": "e-visit", "from": "visit", "to": "router", "variant": "default" },
+    { "id": "e-public", "from": "router", "to": "public", "label": "publica", "variant": "default", "role": "branch" },
+    { "id": "e-noauth", "from": "router", "to": "noauth", "label": "/auth", "variant": "security", "role": "branch" },
+    { "id": "e-authg", "from": "router", "to": "authg", "label": "protegida", "variant": "emphasis" },
+    { "id": "e-login", "from": "noauth", "to": "login", "label": "sin sesion", "variant": "default", "role": "branch" },
+    { "id": "e-redirect", "from": "noauth", "to": "public", "label": "con sesion", "variant": "dashed", "role": "branch" },
+    { "id": "e-ok", "from": "authg", "to": "protected", "label": "con sesion", "variant": "emphasis" },
+    { "id": "e-deny", "from": "authg", "to": "login", "label": "sin sesion", "variant": "security", "role": "error" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "authGuard", "items": ["Sin sesion redirige a /auth/login", "Protege games, chat, top y about-me"] },
+    { "dot": "cyan", "title": "noAuthGuard", "items": ["Evita ver login/registro con sesion activa"] }
+  ]
+}

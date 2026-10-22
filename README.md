@@ -117,6 +117,22 @@ src/app/
 
 Los diagramas están escritos en [Mermaid](https://mermaid.js.org/) y se renderizan directamente en GitHub.
 
+### Diagramas interactivos
+
+Generados con [Archify](https://github.com/tt-a1i/archify) (HTML autocontenido con tema claro/oscuro; abrir en el navegador). Fuentes JSON en [docs/diagrams/src/](docs/diagrams/src/).
+
+| Diagrama | Archivo |
+|----------|---------|
+| Arquitectura general | [docs/diagrams/arquitectura.html](docs/diagrams/arquitectura.html) |
+| Partida y ranking (secuencia) | [docs/diagrams/partida-ranking.html](docs/diagrams/partida-ranking.html) |
+| Modelo de datos (ERD) | [docs/diagrams/datos.html](docs/diagrams/datos.html) |
+| Navegación y guards (workflow) | [docs/diagrams/navegacion.html](docs/diagrams/navegacion.html) |
+| Flujo de datos (dataflow) | [docs/diagrams/flujo-datos.html](docs/diagrams/flujo-datos.html) |
+| Ciclo de una partida (lifecycle) | [docs/diagrams/ciclo-partida.html](docs/diagrams/ciclo-partida.html) |
+| Estructura de `src/app` (tree) | [docs/diagrams/estructura.html](docs/diagrams/estructura.html) |
+| Servicios y modelos (class) | [docs/diagrams/clases.html](docs/diagrams/clases.html) |
+| Historial de commits (timeline) | [docs/diagrams/historial.html](docs/diagrams/historial.html) |
+
 ### Arquitectura general
 
 ```mermaid

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": { "title": "Arcade - Flujo de datos", "locale": "es", "quality_profile": "showcase", "output": "docs/diagrams/flujo-datos.html" },
+  "stages": [ { "label": "Origen" }, { "label": "Servicio" }, { "label": "Supabase" }, { "label": "Consumo" } ],
+  "nodes": [
+    { "id": "game", "type": "frontend", "label": "Juegos", "sublabel": "4 minijuegos", "stage": 0, "row": 0 },
+    { "id": "chatui", "type": "frontend", "label": "Chat", "sublabel": "autor del mensaje", "stage": 0, "row": 2 },
+    { "id": "guardar", "type": "backend", "label": "GuardarPartida", "sublabel": "servicio", "stage": 1, "row": 0 },
+    { "id": "chatsvc", "type": "backend", "label": "ChatService", "sublabel": "sendMessage", "stage": 1, "row": 2 },
+    { "id": "sessions", "type": "database", "label": "game_sessions", "sublabel": "partidas", "stage": 2, "row": 0 },
+    { "id": "messages", "type": "database", "label": "chat_messages", "sublabel": "mensajes", "stage": 2, "row": 2 },
+    { "id": "realtime", "type": "messagebus", "label": "Realtime", "sublabel": "chat-realtime", "stage": 2, "row": 3 },
+    { "id": "top", "type": "frontend", "label": "Top", "sublabel": "ranking", "stage": 3, "row": 0 },
+    { "id": "chatview", "type": "frontend", "label": "Chat", "sublabel": "otros usuarios", "stage": 3, "row": 3 }
+  ],
+  "flows": [
+    { "id": "f-partida", "from": "game", "to": "guardar", "label": "partida", "variant": "emphasis" },
+    { "id": "f-insert", "from": "guardar", "to": "sessions", "label": "INSERT", "variant": "emphasis" },
+    { "id": "f-top", "from": "sessions", "to": "top", "label": "top 10", "variant": "default" },
+    { "id": "f-msg", "from": "chatui", "to": "chatsvc", "label": "mensaje", "variant": "default" },
+    { "id": "f-msg-insert", "from": "chatsvc", "to": "messages", "label": "INSERT", "variant": "default" },
+    { "id": "f-change", "from": "messages", "to": "realtime", "label": "cambio", "variant": "dashed" },
+    { "id": "f-push", "from": "realtime", "to": "chatview", "label": "nuevo mensaje", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Partidas", "items": ["Cada juego guarda victoria, puntaje, duracion y datos", "El ranking lee las 10 mejores por juego"] },
+    { "dot": "orange", "title": "Chat", "items": ["Los mensajes nuevos llegan por postgres_changes"] }
+  ]
+}

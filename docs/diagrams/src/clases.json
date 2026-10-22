@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "class",
+  "meta": { "title": "Arcade - Servicios y modelos", "locale": "es", "quality_profile": "showcase", "output": "docs/diagrams/clases.html" },
+  "layout": { "mode": "grid" },
+  "types": [
+    { "id": "supabase", "label": "SupabaseService", "kind": "class", "row": 0, "col": 0,
+      "methods": [
+        { "name": "signIn", "parameters": "email, password", "visibility": "public" },
+        { "name": "signUp", "parameters": "form: SignUpForm", "visibility": "public" },
+        { "name": "signOut", "returns": "Promise<void>", "visibility": "public" },
+        { "name": "getSession", "returns": "Promise<Session | null>", "visibility": "public" },
+        { "name": "getAccessToken", "returns": "Promise<string | null>", "visibility": "public" }
+      ] },
+    { "id": "guardar", "label": "GuardarPartidaSupabaseService", "kind": "class", "row": 0, "col": 1.5,
+      "methods": [ { "name": "saveGameSession", "parameters": "gameSession: GameSession", "visibility": "public" } ] },
+    { "id": "top", "label": "PreguntasService", "kind": "class", "sublabel": "top.service.ts", "row": 1, "col": 1.5,
+      "attributes": [ { "name": "topGames", "type": "signal<GameSessionWithUser[]>", "visibility": "public" } ],
+      "methods": [
+        { "name": "getTopLaVivorita", "visibility": "public" },
+        { "name": "getTopElAhorcado", "visibility": "public" },
+        { "name": "getTopMayorMenor", "visibility": "public" },
+        { "name": "getTopPreguntados", "visibility": "public" }
+      ] },
+    { "id": "session", "label": "GameSession", "kind": "interface", "row": 0, "col": 4,
+      "attributes": [
+        { "name": "user_uid", "type": "string", "visibility": "public" },
+        { "name": "game_type", "type": "GameType", "visibility": "public" },
+        { "name": "won", "type": "boolean", "visibility": "public" },
+        { "name": "score", "type": "number", "visibility": "public" },
+        { "name": "duration_seconds", "type": "number", "visibility": "public" }
+      ] },
+    { "id": "sessionuser", "label": "GameSessionWithUser", "kind": "interface", "row": 1, "col": 4,
+      "attributes": [ { "name": "users", "type": "{ nombre, apellido, email }", "visibility": "public" } ] },
+    { "id": "chat", "label": "ChatSupabaseService", "kind": "class", "row": 2, "col": 0,
+      "methods": [
+        { "name": "getLastMessages", "parameters": "limit = 10", "visibility": "public" },
+        { "name": "sendMessage", "parameters": "mensaje: string", "visibility": "public" },
+        { "name": "subscribeToMessages", "parameters": "callback", "visibility": "public" },
+        { "name": "unsubscribe", "parameters": "channel", "visibility": "public" }
+      ] },
+    { "id": "chatmsg", "label": "ChatMessageWithUser", "kind": "interface", "row": 2, "col": 1.5,
+      "attributes": [
+        { "name": "id", "type": "string", "visibility": "public" },
+        { "name": "mensaje", "type": "string", "visibility": "public" },
+        { "name": "created_at", "type": "string", "visibility": "public" },
+        { "name": "user_uid", "type": "string", "visibility": "public" }
+      ] }
+  ],
+  "relationships": [
+    { "id": "r1", "from": "guardar", "to": "supabase", "kind": "dependency", "label": "getSession" },
+    { "id": "r2", "from": "top", "to": "supabase", "kind": "dependency", "label": "consulta" },
+    { "id": "r3", "from": "guardar", "to": "session", "kind": "dependency", "label": "guarda" },
+    { "id": "r4", "from": "sessionuser", "to": "session", "kind": "inheritance", "label": "extiende" },
+    { "id": "r5", "from": "top", "to": "sessionuser", "kind": "dependency", "label": "devuelve" },
+    { "id": "r6", "from": "chat", "to": "chatmsg", "kind": "dependency", "label": "devuelve" }
+  ]
+}

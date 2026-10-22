@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Arcade - Partida y ranking",
+    "locale": "es",
+    "output": "docs/diagrams/partida-ranking.html",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    { "id": "player", "type": "external", "label": "Jugador", "sublabel": "navegador" },
+    { "id": "game", "type": "frontend", "label": "Juego", "sublabel": "componente" },
+    { "id": "save", "type": "backend", "label": "GuardarPartida", "sublabel": "servicio" },
+    { "id": "auth", "type": "security", "label": "SupabaseService", "sublabel": "sesion" },
+    { "id": "db", "type": "database", "label": "game_sessions", "sublabel": "PostgreSQL" },
+    { "id": "top", "type": "frontend", "label": "Top", "sublabel": "ranking" }
+  ],
+  "segments": [
+    { "from": 140, "to": 320, "label": "Guardar partida" },
+    { "from": 330, "to": 440, "label": "Ver ranking" }
+  ],
+  "messages": [
+    { "id": "play", "from": "player", "to": "game", "y": 165, "label": "juega", "variant": "default" },
+    { "id": "save-call", "from": "game", "to": "save", "y": 193, "label": "saveGameSession()", "variant": "emphasis" },
+    { "id": "get-session", "from": "save", "to": "auth", "y": 221, "label": "getSession()", "variant": "security" },
+    { "id": "user-id", "from": "auth", "to": "save", "y": 249, "label": "user.id", "variant": "return" },
+    { "id": "insert", "from": "save", "to": "db", "y": 277, "label": "INSERT", "variant": "emphasis" },
+    { "id": "insert-ok", "from": "db", "to": "save", "y": 305, "label": "ok / error", "variant": "return" },
+    { "id": "open-top", "from": "player", "to": "top", "y": 345, "label": "abre /top", "variant": "default" },
+    { "id": "select", "from": "top", "to": "db", "y": 373, "label": "SELECT top 10", "variant": "emphasis" },
+    { "id": "rows", "from": "db", "to": "top", "y": 401, "label": "filas + usuario", "variant": "return" },
+    { "id": "render", "from": "top", "to": "player", "y": 429, "label": "ranking", "variant": "return" }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Guardado", "items": ["Sin sesion activa, saveGameSession lanza un error", "Se guardan juego, victoria, puntaje, duracion y datos"] },
+    { "dot": "cyan", "title": "Ranking", "items": ["Top 10 por tipo de juego ordenado por puntaje", "Join con users para mostrar el nombre"] }
+  ]
+}

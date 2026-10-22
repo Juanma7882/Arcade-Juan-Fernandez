@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arcade - Arquitectura general",
+    "locale": "es",
+    "output": "docs/diagrams/arquitectura.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "users", "type": "external", "label": "Jugador", "sublabel": "Navegador", "pos": [40, 220], "size": [130, 60] },
+    { "id": "shell", "type": "frontend", "label": "MainLayout", "sublabel": "Navbar + router-outlet", "pos": [240, 220], "size": [150, 60] },
+    { "id": "guards", "type": "security", "label": "Guards", "sublabel": "authGuard / noAuthGuard", "pos": [470, 80], "size": [150, 60] },
+    { "id": "features", "type": "frontend", "label": "Features", "sublabel": "Lazy loading", "pos": [470, 220], "size": [150, 60], "tag": "Angular 21" },
+    { "id": "interceptor", "type": "security", "label": "authInterceptor", "sublabel": "Bearer token", "pos": [470, 380], "size": [150, 60] },
+    { "id": "services", "type": "backend", "label": "Servicios core", "sublabel": "inject() + signals", "pos": [700, 220], "size": [150, 60] },
+    { "id": "json", "type": "database", "label": "preguntas.json", "sublabel": "banco de preguntas", "pos": [700, 80], "size": [150, 60] },
+    { "id": "extapi", "type": "external", "label": "APIs externas", "sublabel": "Deck of Cards / GitHub", "pos": [700, 380], "size": [150, 60] },
+    { "id": "supabase", "type": "cloud", "label": "Supabase", "sublabel": "Auth + supabase-js", "pos": [960, 220], "size": [150, 60] },
+    { "id": "realtime", "type": "messagebus", "label": "Realtime", "sublabel": "chat-realtime", "pos": [960, 80], "size": [150, 60] },
+    { "id": "pg", "type": "database", "label": "PostgreSQL", "sublabel": "users / game_sessions / chat_messages", "pos": [960, 380], "size": [150, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Supabase (BaaS)", "wraps": ["supabase", "realtime", "pg"] }
+  ],
+  "connections": [
+    { "id": "users-shell", "from": "users", "to": "shell" },
+    { "id": "shell-features", "from": "shell", "to": "features", "label": "rutas", "variant": "emphasis" },
+    { "id": "guards-features", "from": "guards", "to": "features", "label": "protege", "variant": "security" },
+    { "id": "features-services", "from": "features", "to": "services", "label": "inyecta", "variant": "emphasis" },
+    { "id": "features-interceptor", "from": "features", "to": "interceptor", "label": "HttpClient", "variant": "dashed" },
+    { "id": "interceptor-extapi", "from": "interceptor", "to": "extapi", "label": "Bearer", "variant": "security" },
+    { "id": "services-json", "from": "services", "to": "json", "label": "carga", "variant": "dashed" },
+    { "id": "services-supabase", "from": "services", "to": "supabase", "label": "supabase-js", "variant": "emphasis" },
+    { "id": "supabase-realtime", "from": "supabase", "to": "realtime", "label": "eventos", "variant": "dashed" },
+    { "id": "supabase-pg", "from": "supabase", "to": "pg", "label": "SQL" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Frontend", "items": ["SPA con componentes standalone", "Todas las vistas cargadas con lazy loading", "Estado reactivo con signals"] },
+    { "dot": "rose", "title": "Seguridad", "items": ["authGuard exige sesion de Supabase", "noAuthGuard bloquea login/registro si ya hay sesion", "Interceptor agrega Bearer a las peticiones HttpClient"] },
+    { "dot": "emerald", "title": "Datos", "items": ["Partidas, ranking y chat viven en PostgreSQL", "Chat en vivo via Supabase Realtime", "Preguntas estaticas en public/preguntas.json"] }
+  ]
+}
