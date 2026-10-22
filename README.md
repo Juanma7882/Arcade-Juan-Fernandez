@@ -12,8 +12,41 @@ Plataforma web de minijuegos con autenticación, chat en tiempo real y ranking g
 
 ---
 
+## 📸 Capturas
+
+### Inicio
+
+![Pantalla de inicio](docs/screenshots/inicio.jpg)
+
+### Juegos
+
+![Listado de juegos más jugados y recomendados](docs/screenshots/juegos.jpg)
+
+### Ranking global
+
+![Rankings globales por juego](docs/screenshots/ranking.jpg)
+
+### Chat en vivo
+
+![Chat global en tiempo real](docs/screenshots/chat.jpg)
+
+### Sobre mí
+
+![Perfil con datos de GitHub](docs/screenshots/sobre-mi.jpg)
+
+### Descarga de la app
+
+![Sección de descarga para jugar offline](docs/screenshots/descarga.jpg)
+
+### Página de inicio completa
+
+![Página de inicio completa](docs/screenshots/home-completo.png)
+
+---
+
 ## 📑 Tabla de contenidos
 
+- [Capturas](#-capturas)
 - [Características](#-características)
 - [Juegos](#-juegos)
 - [Tecnologías](#-tecnologías)
